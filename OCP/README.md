@@ -107,7 +107,7 @@ Use _oc cluster down_ to stop the cluster - it should use permanent storage to r
 When restarting the cluster:
 
 ```
-$ systemctl restart docker
+$ systemctl start docker
 $ oc cluster up --public-hostname=[ip address host network]
 ```
 
@@ -121,11 +121,22 @@ $ oc cluster up --public-hostname=[ip address host network]
 $ oc new project ci-cd 
 $ oc new-app jenkins
 ```
-After deploy login as admin/password
 
-Added persistent volume to Jenkins manually including mount point /var/lib/jenkins (triggered redeploy)
+Add a persistent volume claim (pvc) to jenkins via Storage menu option named _jenkins-pvc_ - this will automatically be bound to one of the pvs created by the cluster
 
-Removed default pvc (empty dir) (triggered redeploy) 
+Remove default pvc (_empty dir_) created by the new-app command (this will trigger a redeploy)
+
+```
+$ oc set volume dc/jenkins --remove --name=jenkins-volume-1 # name of volume created
+```
+
+Add a new persistent volume to Jenkins manually (_add storage to jenkins_ on pod details page)including mount point /var/lib/jenkins and referring to the pvc created earlier (this will trigger a redeploy)
+
+Add a route to expose the jenkins service with hostname jenkins.192.168.x.x.nip.io [ip address of cluster]
+
+Check that jenkins can be accessed from within and outside the vm
+
+After deploy can login to Jenkins as admin/password
 
 Smoke tested with hello-world job - persisted beyond cluster down
 
