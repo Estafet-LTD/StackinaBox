@@ -90,11 +90,30 @@ extract oc 3.11 and add to path in .bash_profile
 # source ~/.bash_profile
 ```
 
+# Fix the IP Address
+Find the mac address of the VM under VM settings | network adapter | advanced
+
+Edit the file C:\ProgramData\VMware\vmnetdhcp.conf and add a segment at the end like:
+N.B. this assumes NAT address - VMNet1 would be default for host-only
+
+host VMnet8 {
+    hardware ethernet <mac address of VM>;
+    fixed-address <fixed IP address e.g. 192.168.118.130>;
+    }
+    
+stop and start the vmnet dhcp service:
+
+```
+net stop vmnetdhcp
+net start vmnetdhcp
+```
+
+
 # OpenShift Cluster 
 
 ## start the cluster 
 
-find ip address of host on VM shared network using _ifconfig_ [perhaps 192.168.x.x]
+use the fixed ip address set above [perhaps 192.168.x.x]
 
 call _oc cluster up_ with --public-hostname=[ip address] 
 
@@ -108,7 +127,7 @@ When restarting the cluster:
 
 ```
 $ systemctl start docker
-$ oc cluster up --public-hostname=[ip address host network]
+$ oc cluster up --public-hostname=[ip address]
 ```
 
 
