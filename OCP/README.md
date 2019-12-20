@@ -2,6 +2,11 @@ Following instructions at https://github.com/openshift/origin/blob/release-3.11/
 
 # Docker
 [a install docker]
+If another app (PackageKit) is holding yum lock then
+
+```
+ $ pkill PackageKit
+ ```
 
 ```
 $ sudo yum install docker
@@ -9,9 +14,8 @@ $ sudo yum install docker
 [b set up insecure registries for docker daemon]
 
 ```
-$ sudo vi /etc/containers/registries.conf
-Under [registries.insecure] add registries = ['172.30.0.0/16']
-OR add to /etc/docker/daemon.json:
+$ sudo vi /etc/docker/daemon.json
+and add:
 {
         "insecure-registries" : ["172.30.0.0/16"]
     }
@@ -54,7 +58,8 @@ $ docker network inspect -f "{{range .IPAM.Config }}{{ .Subnet }}{{end}}" bridge
 172.17.0.0/16
 ```
 
-[f create a new firewalld zone for the subnet and grant it access to the API and DNS ports]
+# opening firewalls
+[a create a new firewalld zone for the subnet and grant it access to the API and DNS ports]
 
 ```
 $ firewall-cmd --permanent --new-zone dockerc
@@ -62,6 +67,18 @@ $ firewall-cmd --permanent --zone dockerc --add-source 172.17.0.0/16
 $ firewall-cmd --permanent --zone dockerc --add-port 8443/tcp
 $ firewall-cmd --permanent --zone dockerc --add-port 53/udp
 $ firewall-cmd --permanent --zone dockerc --add-port 8053/udp
+$ firewall-cmd --reload
+```
+[b open Windows Defender firewall for the VM adapter]
+
+Windows Firewall | Advanced Settings | Windows Defender Firewall Properties | Protected Network Connections | Uncheck the correct VMWare Network Adapter
+
+[c open VM firewall to outside]
+
+```
+$ firewall-cmd --permanent --add-port=8443/tcp
+$ firewall-cmd --permanent --add-port=80/tcp
+$ firewall-cmd --permanent --add-port=443/tcp
 $ firewall-cmd --reload
 ```
 
@@ -73,18 +90,35 @@ extract oc 3.11 and add to path in .bash_profile
 # source ~/.bash_profile
 ```
 
+# OpenShift Cluster 
+
+## start the cluster 
+
+find ip address of host on VM shared network using _ifconfig_ [perhaps 192.168.x.x]
+
+call _oc cluster up_ with --public-hostname=[ip address] 
+
+check that console is available from outside the VM
+
+## controlling the OpenShift cluster
+
+Use _oc cluster down_ to stop the cluster - it should use permanent storage to remember its state
+
+When restarting the cluster:
+
 ```
 $ systemctl restart docker
 $ oc cluster up --public-hostname=[ip address host network]
+```
 
+
+
+### JENKINS 
+
+[needs to be automated with ansible galaxy OpenShift Applier in due course] 
+
+```
 $ oc new project ci-cd 
-```
-
-
-
-### JENKINS [needs to be automated with ansible galaxy OpenShift Applier] 
-
-```
 $ oc new-app jenkins
 ```
 After deploy login as admin/password
