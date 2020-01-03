@@ -160,3 +160,4 @@ After deploy can login to Jenkins as admin/password
 Smoke tested with hello-world job - persisted beyond cluster down
 
 ## GITEA [automate later]
+Follow instructions at https://computingforgeeks.com/how-to-install-gitea-self-hosted-git-service-on-centos-7-with-nginx-reverse-proxy/
