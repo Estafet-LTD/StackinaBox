@@ -133,7 +133,7 @@ $ oc cluster up --public-hostname=[ip address]
 
 
 
-### JENKINS 
+### Install Jenkins 
 
 [needs to be automated with ansible galaxy OpenShift Applier in due course] 
 
@@ -160,7 +160,7 @@ After deploy can login to Jenkins as admin/password
 
 Smoke tested with hello-world job - persisted beyond cluster down
 
-### SonarQube
+### Install SonarQube
 
 [automate in due course]
 
@@ -170,6 +170,21 @@ Follow the instructions at https://medium.com/@dale.bingham_30375/setup-sonarqub
 
 In addition log into the SonarQube console as admin and install the SonarJava Quality Profile via Administration | Marketplace and allow the SonarQube server to rebuild
 
+Create a user named jenkins and a token for the user - see https://docs.sonarqube.org/latest/user-guide/user-token/
+
+### Configure Jenkins
+
+In Manage Jenkins | Global Tools Configuration | add Maven - name it 'M3' - select the default download option
+
+In Manage Jenkins | Global Tools Configuration | add Docker - name it 'Docker' - select the default donload option
+
+In Manage Jenkins |Manage Plugins | add Sonarqube plugin and allow rebuild
+
+In Manage Jenkins | Global Tools Configuration | add SonarQube Scanner - name it 'Sonar' - select the default donload option
+
+In Manage Jenkins | Configure System - under SonarQube section tick the box Enable injection of SonarQube server configuration as build environment variables and fill in server details - note the url for the server should be the internal one (ending in .svc). Also add the credential which will be the token created by SonarQube. Use type secret text and name it jenkins-token
+
+sonar setup
 
 ## GITEA [automate later]
 Follow instructions at https://computingforgeeks.com/how-to-install-gitea-self-hosted-git-service-on-centos-7-with-nginx-reverse-proxy/
