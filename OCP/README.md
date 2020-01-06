@@ -79,7 +79,8 @@ Windows Firewall | Advanced Settings | Windows Defender Firewall Properties | Pr
 $ firewall-cmd --permanent --add-port=8443/tcp
 $ firewall-cmd --permanent --add-port=80/tcp
 $ firewall-cmd --permanent --add-port=443/tcp
-$ firewall-cmd --permanent --add-pot=3000/tcp # used by gitea
+$ firewall-cmd --permanent --add-port=3000/tcp # used by gitea
+$ firewall-cmd --permanent --add-port=9000/tcp # used by sonarqube
 $ firewall-cmd --reload
 ```
 
