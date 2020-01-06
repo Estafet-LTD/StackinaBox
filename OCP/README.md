@@ -165,7 +165,10 @@ Smoke tested with hello-world job - persisted beyond cluster down
 [automate in due course]
 
 Create a new project called sonarqube
+
 Follow the instructions at https://medium.com/@dale.bingham_30375/setup-sonarqube-in-minishift-for-scanning-projects-through-jenkins-a70a6e2d93d3
+
+In addition log into the SonarQube console as admin and install the Java Quality Profile via Administration | Marketplace and allow the SonarQube server to rebuild
 
 
 ## GITEA [automate later]
