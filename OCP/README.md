@@ -211,10 +211,11 @@ delete failing pod and redeploy from deployment
 
 #### install kafka cluster
 
-add persistent kafka cluster:
+add persistent kafka cluster called my-cluster and a topic called my-topic using the example yaml files:
 
 ```
-$ oc apply -f examples/kafka/kafka-persistent-single.yaml 
+$ oc apply -f examples/kafka/kafka-persistent-single.yaml
+$ oc apply -f examples/topic/kafka-topic.yaml
 ```
 
 ## GITEA [automate later]
