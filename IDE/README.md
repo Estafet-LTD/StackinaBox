@@ -29,4 +29,6 @@ OS name: "linux", version: "3.10.0-957.el7.x86_64", arch: "amd64", family: "unix
 * CodeReady plug-in for OpenShift development
 * PyDev plug-in for Python development
 * CDT plug-in for C++ development
+* Spring IDE
+* JBoss Maven Spring Boot Configurator
 * Smoke test - created a project from gitea repo running on host (open Windows Firewall)
