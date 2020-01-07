@@ -187,7 +187,35 @@ In Manage Jenkins | Configure System - under SonarQube section tick the box Enab
 
 ### Install Kafka and associated products
 
-Follow instructions at https://dzone.com/articles/how-to-run-kafka-on-openshift-the-enterprise-kuber - ignore steps to install minishift
+#### install strimzi
+
+Follow instructions at https://strimzi.io/docs/latest/full.html#kafka-cluster-str (use _oc_ instead of _kubectl_ command)
+
+Download latest strimzi release st https://github.com/strimzi/strimzi-kafka-operator/releases
+
+Unzip release into a folder (e.g. strimzi-0.15.0)
+
+```
+$ oc new-project kafka
+$ cd strimzi-0.15.0
+$ oc apply -f install/cluster-operator/
+```
+
+if deployment fails with "no RBAC policy matched"
+
+```
+$	oc adm policy add-cluster-role-to-user strimzi-cluster-operator-namespaced --serviceaccount strimzi-cluster-operator -n <project>
+```
+
+delete failing pod and redeploy from deployment
+
+#### install kafka cluster
+
+add persistent kafka cluster:
+
+```
+$ oc apply -f examples/kafka/kafka-persistent-single.yaml 
+```
 
 ## GITEA [automate later]
 Follow instructions at https://computingforgeeks.com/how-to-install-gitea-self-hosted-git-service-on-centos-7-with-nginx-reverse-proxy/
