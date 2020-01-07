@@ -185,9 +185,9 @@ In Manage Jenkins | Global Tools Configuration | add SonarQube Scanner - name it
 
 In Manage Jenkins | Configure System - under SonarQube section tick the box Enable injection of SonarQube server configuration as build environment variables and fill in server details - note the url for the server should be the internal one (ending in .svc). Also add the credential which will be the token created by SonarQube. Use type secret text and name it e.g. sq-token
 
-### Install Kafka and associated products
+## Install Kafka and associated products
 
-#### install strimzi
+### install strimzi
 
 Follow instructions at https://strimzi.io/docs/latest/full.html#kafka-cluster-str (use _oc_ instead of _kubectl_ command)
 
@@ -199,6 +199,9 @@ Unzip release into a folder (e.g. strimzi-0.15.0)
 $ oc new-project kafka
 $ cd strimzi-0.15.0
 $ oc apply -f install/cluster-operator/
+$ oc edit scc restricted # add lines  
+# fsGroup:
+# type: RunAsAny
 ```
 
 if deployment fails with "no RBAC policy matched"
@@ -209,7 +212,7 @@ $	oc adm policy add-cluster-role-to-user strimzi-cluster-operator-namespaced --s
 
 delete failing pod and redeploy from deployment
 
-#### install kafka cluster
+### install kafka cluster
 
 add persistent kafka cluster called my-cluster and a topic called my-topic using the example yaml files:
 
@@ -217,6 +220,28 @@ add persistent kafka cluster called my-cluster and a topic called my-topic using
 $ oc apply -f examples/kafka/kafka-persistent-single.yaml
 $ oc apply -f examples/topic/kafka-topic.yaml
 ```
+
+#### smoke test kafka in container terminals
+
+open two terminals on the kafka cluster pod that was created (e.g. my-cluster-kafka-0)
+
+in the first terminal type the following. This will produce a command prompt (>) where you can type messages:
+
+```
+$ bin/kafka-console-producer.sh --broker-list localhost:9092 --topic my-topic
+```
+
+in the second terminal type the following. This should echo the messages typed in the first terminal:
+
+```
+$ bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic my-topic --from-beginning
+```
+
+Once these are open anything typed into the first, producer terminal will appear in the second, consumer terminal
+
+It seems that there is some configuration that happens first time the producer is run so it may need to be run twice to work properly
+
+To prove that this is a topic that persists the messages try shutting down the consumer and re-running it. All messages from the start should be displayed. This should also survive a VM restart as it is held in a persistent volume
 
 ## GITEA [automate later]
 Follow instructions at https://computingforgeeks.com/how-to-install-gitea-self-hosted-git-service-on-centos-7-with-nginx-reverse-proxy/
