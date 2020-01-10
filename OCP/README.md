@@ -245,3 +245,16 @@ To prove that this is a topic that persists the messages try shutting down the c
 
 ## GITEA [automate later]
 Follow instructions at https://computingforgeeks.com/how-to-install-gitea-self-hosted-git-service-on-centos-7-with-nginx-reverse-proxy/
+
+## Considerations when setting up pipelines
+
+The default user in the ci-cd project requires admin rights to a project to perfoem the OpenShift DSL pipeline steps.
+
+The following extra set up is required (for example project):
+
+```
+$ oc new-project example
+$ oc policy add-role-to-user admin system:serviceaccount:ci-cd:default
+```
+
+
