@@ -246,9 +246,9 @@ To prove that this is a topic that persists the messages try shutting down the c
 ## GITEA [automate later]
 Follow instructions at https://computingforgeeks.com/how-to-install-gitea-self-hosted-git-service-on-centos-7-with-nginx-reverse-proxy/
 
-## Considerations when setting up pipelines
+## Considerations when setting up a pipeline for java applications
 
-The default user in the ci-cd project requires admin rights to a project to perfoem the OpenShift DSL pipeline steps.
+### The default user in the ci-cd project requires admin rights to a project to perform the OpenShift DSL pipeline steps as this will be used by Jenkins.
 
 The following extra set up is required (for example project):
 
@@ -257,4 +257,12 @@ $ oc new-project example
 $ oc policy add-role-to-user admin system:serviceaccount:ci-cd:default
 ```
 
+### The openjdk18-openshift base image needs to be obtained from Red Hat
+
+The following steps will get th eimage from RH and create an image stream in the project (maybe consider doing this in the openshift peoject)
+
+```
+$ oc import-image redhat-openjdk-18/openjdk18-openshift --from=registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift --confirm
+$ oc patch is/openjdk18-openshift --type json --patch '[{"op": "replace", "path": "/spec/tags/0/annotations", "value": { "tags": "builder" }}]'  # this will tag the image as a builder so it will also appear in th eOpenShift catalogue
+```
 
