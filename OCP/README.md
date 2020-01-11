@@ -257,12 +257,28 @@ $ oc new-project example
 $ oc policy add-role-to-user admin system:serviceaccount:ci-cd:default
 ```
 
-### The openjdk18-openshift base image needs to be obtained from Red Hat
+### Need to create a spring-boot builder image that can be retained in the OpenShift docker registry
 
-The following steps will get th eimage from RH and create an image stream in the project (maybe consider doing this in the openshift peoject)
+Note tried to use the Red Hat openjdk18 s2i image but this kept wanting to connect to RH access
+
+Eventually built a s2i image from https://github.com/ganrad/openshift-s2i-springboot-java
+
+The following steps will create a spring-boot builder image stream in the project (maybe consider doing this in the openshift project in future)
 
 ```
-$ oc import-image redhat-openjdk-18/openjdk18-openshift --from=registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift --confirm
-$ oc patch is/openjdk18-openshift --type json --patch '[{"op": "replace", "path": "/spec/tags/0/annotations", "value": { "tags": "builder" }}]'  # this will tag the image as a builder so it will also appear in th eOpenShift catalogue
+$ oc login
+
+$ oc project example-project
+
+$ oc new-build --strategy=docker --name=springboot-java https://github.com/ganrad/openshift-s2i-springboot-java.git
 ```
 
+Note: this fails as the image will not find an acceptable version of maven so after the first image fails:
+
+Go to OpenShift console:
+
+in example-project
+* under builds | builds
+* Select springboot-java
+* Under environment add MAVEN_VER = 3.0.5, GRADLE_VER = 4.4, Save and Start Build
+* This time build should succeed and push the new s2i image to the registry
