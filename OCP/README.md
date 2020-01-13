@@ -286,6 +286,6 @@ in example-project
 ### How to extract a built image
 
 ```
-$docker save 172.30.1.1:5000/example-project/example > example.tar # takes latest taged iage and tars it
+$docker save 172.30.1.1:5000/example-project/example > example.tar # takes latest tagged image and tars it
 ```
 
