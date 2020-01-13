@@ -282,3 +282,10 @@ in example-project
 * Select springboot-java
 * Under environment add MAVEN_VER = 3.0.5, GRADLE_VER = 4.4, Save and Start Build
 * This time build should succeed and push the new s2i image to the registry
+
+### How to extract a built image
+
+```
+$docker save 172.30.1.1:5000/example-project/example > example.tar # takes latest taged iage and tars it
+```
+
