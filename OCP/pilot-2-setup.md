@@ -16,4 +16,12 @@ with basic steps as follows:
 * Obtain the required Red Hat repositories
 * Pull the required docker images into the registry using the scripts:
 
+```
+$ ./pull-ocp-base-images.sh
+$ ./pull-ocp-opt-images.sh
+$ ./pull-ocp-s2i-images.sh
+```
+
+
+
 
