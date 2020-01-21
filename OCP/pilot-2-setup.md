@@ -35,5 +35,15 @@ $ ./save-ocp-s2i-images.sh
 $ cp ose3-builder-images.tar ose3-optional-imags.tar ose3-images.tar /mnt/hgfs/SF # export to shared folder
 ```
 
+## Installing on the OCP VM
+
+* Load the docker images from shared folder
+
+```
+$ docker load -i ose3-images.tar
+$ docker load -i ose3-builder-images.tar
+$ docker load -i ose3-optional-images.tar
+```
+
 
 
