@@ -32,7 +32,7 @@ $ cd /<image directory>
 $ ./save-ocp-base-images.sh
 $ ./save-ocp-opt-images.sh
 $ ./save-ocp-s2i-images.sh
-$ cp ose3-builder-images.tar ose3-optional-imags.tar ose3-images.tar /mnt/hgfs/SF # export to shared folder
+$ cp ose3-builder-images.tar ose3-optional-images.tar ose3-images.tar /mnt/hgfs/SF # export to shared folder
 ```
 
 ## Installing on the OCP VM
