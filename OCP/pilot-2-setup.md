@@ -25,14 +25,13 @@ $ ./pull-ocp-opt-images.sh
 $ ./pull-ocp-s2i-images.sh
 ```
 
-* Save the required docker images locally into tar files using the scripts:
+* Save the required docker images into tar files on th eshared folder using the scripts:
 
 ```
-$ cd /<image directory>
+$ cd /mnt/hgfs/SF #  shared folder
 $ ./save-ocp-base-images.sh
 $ ./save-ocp-opt-images.sh
 $ ./save-ocp-s2i-images.sh
-$ cp ose3-builder-images.tar ose3-optional-images.tar ose3-images.tar /mnt/hgfs/SF # export to shared folder
 ```
 
 ## Installing on the OCP VM
