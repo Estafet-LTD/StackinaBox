@@ -46,8 +46,13 @@ host VMnet8 {
     hardware ethernet <mac address of VM>;
     fixed-address <fixed IP address e.g. 192.168.118.143>;
     }
-* Restart the VMWare DHCP service
-  
+* stop and start the vmnet dhcp service:
+
+```
+net stop vmnetdhcp
+net start vmnetdhcp
+```
+
 
 ## Installing on the OCP VM
 
