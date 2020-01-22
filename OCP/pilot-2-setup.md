@@ -4,6 +4,14 @@ Design for an all-in-one _disconnected_ install in the OpenShift VM requires ano
 
 ## Creation of the Repository VM
 
+### VM config
+
+4 Gb RAM
+2 cores
+140 Gb hard disk
+NAT connection (for internet)
+Host only connection (for local access)
+
 ### Set up
 
 This VM can be created with an internet connection as long as the OCP VM is disconnected
@@ -53,8 +61,23 @@ net stop vmnetdhcp
 net start vmnetdhcp
 ```
 
+* Test the http server from outside the VM using the fixed ip address
+
+http://192.168.118.143
+
 
 ## Installing on the OCP VM
+
+### VM config
+
+24 Gb RAM
+8 cores
+80 Gb hard disk
+Host only connection
+
+### Set up
+
+* Install docker
 
 * Load the docker images from shared folder
 
