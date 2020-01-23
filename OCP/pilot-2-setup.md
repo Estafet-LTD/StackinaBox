@@ -87,7 +87,12 @@ In the current (Pilot 2) instance this is a docker registry - maybe this will be
 
 * Install docker
 
-* Install docker registry which will serve the disconnected OCP install
+* Install docker registry which will serve the disconnected OCP
+
+```
+$ docker run -d -p 5000:5000 --restart=always --name registry registry:2
+```
+
 
 * Pull the required docker images into the registry using the scripts:
 
