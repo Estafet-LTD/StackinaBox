@@ -146,6 +146,12 @@ host VMnet8 {
     fixed-address _<fixed IP address e.g. 192.168.118.144>_;
     
     }
+    
+host VMnet1 {
+    hardware ethernet _<mac address of VM>_;
+    
+    fixed-address _<fixed IP address e.g. 192.168.141.132>_;
+}
 
 * stop and start the vmnet dhcp service:
 
