@@ -55,9 +55,12 @@ Find the mac address of the VM under VM settings | network adapter | advanced
 N.B. this assumes NAT address - VMNet1 would be default for host-only
 
 host VMnet8 {
-    hardware ethernet <mac address of VM>;
-    fixed-address <fixed IP address e.g. 192.168.118.143>;
-    }
+
+    hardware ethernet _<mac address of VM>_;
+    fixed-address _<fixed IP address e.g. 192.168.118.143>_;
+   
+   }
+    
 * stop and start the vmnet dhcp service:
 
 ```
@@ -137,9 +140,13 @@ Find the mac address of the VM under VM settings | network adapter | advanced
 N.B. this assumes NAT address - VMNet1 would be default for host-only
 
 host VMnet8 {
-    hardware ethernet <mac address of VM>;
-    fixed-address <fixed IP address e.g. 192.168.118.144>;
+
+    hardware ethernet _<mac address of VM>_;
+    
+    fixed-address _<fixed IP address e.g. 192.168.118.144>_;
+    
     }
+
 * stop and start the vmnet dhcp service:
 
 ```
