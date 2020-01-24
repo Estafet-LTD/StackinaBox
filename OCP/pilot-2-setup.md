@@ -211,6 +211,7 @@ $ docker-storage-setup
 
 ```
 
+* Create nfs storage in the VM - follow steps at https://www.thegeekdiary.com/centos-rhel-7-configuring-an-nfs-server-and-nfs-client/
 
 * Install openshift using ansible
 
