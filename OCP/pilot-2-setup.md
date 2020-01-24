@@ -216,7 +216,9 @@ $ docker-storage-setup
 * Install openshift using ansible
 
 ```
-ansible playbook stuff here
+ansible-playbook -i inventory_aio /usr/share/ansible/openshift-ansible/playbooks/prerequisites.yml
+
+ansible-playbook -i inventory_aio /usr/share/ansible/openshift-ansible/playbooks/deploy_cluster.yml
 ```
 
 
