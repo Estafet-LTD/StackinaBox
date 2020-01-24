@@ -211,18 +211,11 @@ $ docker-storage-setup
 
 ```
 
-* Comfigure docker logging to keep log files small and rotated
 
-Add the following string to the OPTIONS= list in /etc/sysconfig/docker file
-
---log-opt max-size=1M max-file=3
-
-* Load the docker images from shared folder
+* Install openshift using ansible
 
 ```
-$ docker load -i ose3-images.tar
-$ docker load -i ose3-builder-images.tar
-$ docker load -i ose3-optional-images.tar
+ansible playbook stuff here
 ```
 
 
