@@ -48,16 +48,16 @@ $ ./save-ocp-opt-images.sh
 $ ./save-ocp-s2i-images.sh
 ```
 
-### Fix the IP Address
-Find the mac address of the VM under VM settings | network adapter | advanced
+### Fix the IP Address on th ehost only network
+Find the mac address of the H/O adapter for the VM under VM settings | network adapter | advanced
 
 * Edit the file C:\ProgramData\VMware\vmnetdhcp.conf and add a segment at the end like:
 N.B. this assumes NAT address - VMNet1 would be default for host-only
 
-host VMnet8 {
+host VMnet1 {
 
-    hardware ethernet _<mac address of VM>_;
-    fixed-address _<fixed IP address e.g. 192.168.118.143>_;
+    hardware ethernet _mac address of VM_;
+    fixed-address _fixed IP address e.g. 192.168.141.134_;
    
    }
     
@@ -70,7 +70,7 @@ net start vmnetdhcp
 
 * Test the http server from outside the VM using the fixed ip address
 
-http://192.168.118.143
+http://192.168.141.134
 
 ## Creation of the Registry VM
 
@@ -134,24 +134,19 @@ $ ./save-ocp-s2i-images.sh
 
 
 ### Fix the IP Address
-Find the mac address of the VM under VM settings | network adapter | advanced
+Find the mac address of the host only adapter for the VM under VM settings | network adapter | advanced
 
 * Edit the file C:\ProgramData\VMware\vmnetdhcp.conf and add a segment at the end like:
 N.B. this assumes NAT address - VMNet1 would be default for host-only
 
-host VMnet8 {
+host VMnet1 {
 
-    hardware ethernet _<mac address of VM>_;
+    hardware ethernet _mac address of VM_;
     
-    fixed-address _<fixed IP address e.g. 192.168.118.144>_;
+    fixed-address _fixed IP address e.g. 192.168.141.132_;
     
     }
     
-host VMnet1 {
-    hardware ethernet _<mac address of VM>_;
-    
-    fixed-address _<fixed IP address e.g. 192.168.141.132>_;
-}
 
 * stop and start the vmnet dhcp service:
 
@@ -162,7 +157,7 @@ net start vmnetdhcp
 
 * Test the http server from outside the VM using the fixed ip address
 
-curl http://192.168.118.144:5000
+curl http://192.168.141.132:5000
 
 
 ## Installing on the OCP VM
@@ -179,7 +174,42 @@ Host only connection
 
 ### Set up
 
+ Follow some steps from https://blog.openshift.com/openshift-all-in-one-aio-for-labs-and-fun/ while keeping one eye on https://docs.openshift.com/container-platform/3.11/install/disconnected_install.html#disconnected-installing-openshift
+
+* create ssh key
+
+* Install ansible etc.
+
+```
+$ yum -y install atomic-openshift-clients openshift-ansible
+```
+
 * Install docker
+
+```
+$ yum install docker-1.13.1
+$ docker version
+```
+
+* Configure storage for Docker
+
+```
+$ systemctl stop docker
+$ container-storage-setup --reset
+$ rm -rf /var/lib/docker/
+
+# cat <<EOF > /etc/sysconfig/docker-storage-setup
+STORAGE_DRIVER=overlay2
+DEVS=/dev/nvme0n1
+CONTAINER_ROOT_LV_NAME=docker-lv
+CONTAINER_ROOT_LV_SIZE=100%FREE
+CONTAINER_ROOT_LV_MOUNT_PATH=/var/lib/docker
+VG=docker-vg
+EOF
+
+$ docker-storage-setup
+
+```
 
 * Load the docker images from shared folder
 
