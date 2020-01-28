@@ -180,6 +180,12 @@ Host only connection
 
 * add ip address and hostname to /etc/hosts file
 
+* add default route
+
+```
+ip route add default via <ip address>
+```
+
 * Install ansible etc.
 
 ```
