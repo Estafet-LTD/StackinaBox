@@ -178,6 +178,8 @@ Host only connection
 
 * create ssh key
 
+* add ip address and hostname to /etc/hosts file
+
 * Install ansible etc.
 
 ```
