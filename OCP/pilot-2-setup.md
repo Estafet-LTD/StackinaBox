@@ -14,7 +14,9 @@ Design for an all-in-one _disconnected_ install in the OpenShift VM requires ano
 
 NAT connection (for internet)
 
-Host only connection (for local access)
+Host only connection (for local access) 
+
+NB may need to run dhclient on start up tp force lease of (static) ip address
 
 ### Set up
 
@@ -48,7 +50,7 @@ $ ./save-ocp-opt-images.sh
 $ ./save-ocp-s2i-images.sh
 ```
 
-### Fix the IP Address on th ehost only network
+### Fix the IP Address on the host only network
 Find the mac address of the H/O adapter for the VM under VM settings | network adapter | advanced
 
 * Edit the file C:\ProgramData\VMware\vmnetdhcp.conf and add a segment at the end like:
@@ -87,6 +89,8 @@ NAT connection (for internet)
 Host only connection (for local access)
 
 In the current (Pilot 2) instance this is a docker registry - maybe this will be satellite in future
+
+NB may need to run dhclient on start up tp force lease of (static) ip address
 
 * Install docker
 
@@ -171,6 +175,8 @@ curl http://192.168.141.132:5000
 80 Gb hard disk
 
 Host only connection
+
+NB may need to run dhclient on start up tp force lease of (static) ip address
 
 ### Set up
 
