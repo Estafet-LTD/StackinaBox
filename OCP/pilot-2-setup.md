@@ -127,9 +127,9 @@ $ docker load -i ose3-s2i-images.tar
 
 ```
 $ cd /mnt/hgfs/SF #  shared folder
-$ ./save-ocp-base-images.sh
-$ ./save-ocp-opt-images.sh
-$ ./save-ocp-s2i-images.sh
+$ ./tag-ocp-base-images.sh
+$ ./tag-ocp-opt-images.sh
+$ ./tag-ocp-s2i-images.sh
 ```
 
 
@@ -218,6 +218,8 @@ EOF
 $ docker-storage-setup
 
 ```
+
+* Create an internal registry and import images from the Registry VM
 
 * Create nfs storage in the VM - follow steps at https://www.thegeekdiary.com/centos-rhel-7-configuring-an-nfs-server-and-nfs-client/
 
