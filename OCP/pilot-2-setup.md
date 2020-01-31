@@ -231,5 +231,39 @@ ansible-playbook -i inventory_aio /usr/share/ansible/openshift-ansible/playbooks
 ansible-playbook -i inventory_aio /usr/share/ansible/openshift-ansible/playbooks/deploy_cluster.yml
 ```
 
+* To uninstall and clean up:
+
+```
+ansible-playbook -i inventory_aio /usr/share/ansible/openshift-ansible/playbooks/adhoc/uninstall.yml
+```
+
+### Workarounds
+
+There is a need for one or two workarounds when running the all-in-one disconnected:
+
+* The default route needs to be created for some internal elements of the OpenShift install
+
+```
+ip route add default via <ip address>
+```
+
+* A file needs to be created in /etc/origin/node/resolv.conf for the sdn pod to work correctly before running playbook
+
+```
+echo "nameserver 192.168.141.1" > /etc/origin/node/resolv.conf
+```
+
+* the docker config file in /etc/sysconfig/docker needs to have an insecure registry added (this is removed by the prerequisites playbook)
+
+```
+cat /etc/sysconfig/docker
+# /etc/sysconfig/docker
+
+# Modify these options if you want to change the way the docker daemon runs
+OPTIONS=' --selinux-enabled     --insecure-registry=172.30.0.0/16 --insecure-registry=192.168.141.132:5000   --signature-verification=False'
+
+[output redacted]
+```
+
 
 
