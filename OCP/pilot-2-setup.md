@@ -265,5 +265,9 @@ OPTIONS=' --selinux-enabled     --insecure-registry=172.30.0.0/16 --insecure-reg
 [output redacted]
 ```
 
+* creating a deployable application is possible by directly referencng the images in the docker registry VM 
 
+```
+oc new-app --docker-image="192.168.141.132:5000/openshift3/jenkins-2-rhel7:latest"
+```
 
