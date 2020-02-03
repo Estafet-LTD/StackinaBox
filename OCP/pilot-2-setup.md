@@ -177,7 +177,7 @@ curl http://192.168.141.132:5000
 
 Host only connection
 
-NB may need to run dhclient on start up tp force lease of (static) ip address
+NB may need to run dhclient on start up to force lease of (static) ip address
 
 ### Set up
 
@@ -187,7 +187,7 @@ NB may need to run dhclient on start up tp force lease of (static) ip address
  
 * Ensure Repo and Registry VMs are accessible (ping)
 
-* Ensue _ifconfig_ resolves with static IP address - run _sudo dhclient_ if necessary
+* Ensure _ifconfig_ resolves with static IP address - run _sudo dhclient_ if necessary
 
 * add ip address and hostname (op.example.com) to /etc/hosts file
 
@@ -239,7 +239,7 @@ $ docker-storage-setup
 
 ```
 
-* Restart docker and enabe docker
+* Restart docker and enable docker
 
 ```
 $ systemctl restart docker
