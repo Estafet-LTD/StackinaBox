@@ -314,7 +314,14 @@ OPTIONS=' --selinux-enabled     --insecure-registry=172.30.0.0/16 --insecure-reg
 * creating a deployable application is possible by directly referencng the images in the docker registry VM 
 
 ```
+# docker pull 192.168.141.132:5000/openshift3/jenkins-2-rhel7:latest  # pull into local registry
 # oc new-app --docker-image="192.168.141.132:5000/openshift3/jenkins-2-rhel7:latest"
 ```
-After this add a PVC as the default is not persistent - this can be done via the console
+
+After this add a PVC as the default is not persistent - this can be done via the console: delete the old pvc and add a new one
 Ensure that the image pull policy in the deployment config is set to IfNotPresent (edit the dc)
+
+```
+# oc set volume dc/jenkins-2-rhel7 --remove --name=jenkins-2-rhel7-volume-1 # name of volume created
+# edit dc jenkins-2-rhel7   # and set ImagePullPolicy to IfNotPresent
+```
