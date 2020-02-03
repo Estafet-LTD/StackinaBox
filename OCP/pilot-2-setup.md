@@ -1,6 +1,6 @@
 # Set up for Pilot 2
 
-Design for an all-in-one _disconnected_ install in the OpenShift VM requires another VM to contain the repositories
+Design for an all-in-one _disconnected_ install in the OpenShift VM requires another VM to contain the repositories and ne for the registry
 
 ## Creation of the Repository VM
 
@@ -16,7 +16,7 @@ NAT connection (for internet)
 
 Host only connection (for local access) 
 
-NB may need to run dhclient on start up tp force lease of (static) ip address
+NB may need to run dhclient on start up to force lease of (static) ip address
 
 ### Set up
 
@@ -90,7 +90,7 @@ Host only connection (for local access)
 
 In the current (Pilot 2) instance this is a docker registry - maybe this will be satellite in future
 
-NB may need to run dhclient on start up tp force lease of (static) ip address
+NB may need to run dhclient on start up to force lease of (static) ip address
 
 * Install docker
 
@@ -159,7 +159,7 @@ net stop vmnetdhcp
 net start vmnetdhcp
 ```
 
-* Test the http server from outside the VM using the fixed ip address
+* Test the docker service from outside the VM using the fixed ip address (should not fail but will not return anything)
 
 curl http://192.168.141.132:5000
 
@@ -172,7 +172,8 @@ curl http://192.168.141.132:5000
 
 8 cores
 
-80 Gb hard disk
+60 Gb hard disk
+40 Gb nvme drive (for docker storage)
 
 Host only connection
 
@@ -181,16 +182,29 @@ NB may need to run dhclient on start up tp force lease of (static) ip address
 ### Set up
 
  Follow some steps from https://blog.openshift.com/openshift-all-in-one-aio-for-labs-and-fun/ while keeping one eye on https://docs.openshift.com/container-platform/3.11/install/disconnected_install.html#disconnected-installing-openshift
+ 
+ Steps follow:
+ 
+* Ensure Repo and Registry VMs are accessible (ping)
 
-* create ssh key
+* Ensue _ifconfig_ resolves with static IP address - run _sudo dhclient_ if necessary
 
-* add ip address and hostname to /etc/hosts file
+* add ip address and hostname (op.example.com) to /etc/hosts file
 
+* create passwordless ssh key and copy to ocp.example.com then test ssh to self
+
+```
+$ ssh-keygen
+
+$ ssh-copy-id ocp.example.com
+```
 * add default route
 
 ```
 ip route add default via <ip address>
 ```
+
+* create file _ose.repo_ in folder /etc/yum/repos.d  (see sample in folder)
 
 * Install ansible etc.
 
@@ -225,41 +239,46 @@ $ docker-storage-setup
 
 ```
 
-* Create an internal registry and import images from the Registry VM
-
-* Create nfs storage in the VM - follow steps at https://www.thegeekdiary.com/centos-rhel-7-configuring-an-nfs-server-and-nfs-client/
-
-* Install openshift using ansible
+* Restart docker and enabe docker
 
 ```
-ansible-playbook -i inventory_aio /usr/share/ansible/openshift-ansible/playbooks/prerequisites.yml
-
-ansible-playbook -i inventory_aio /usr/share/ansible/openshift-ansible/playbooks/deploy_cluster.yml
+$ systemctl restart docker
+$ systemctl enable docker
 ```
 
-* To uninstall and clean up:
+* Create nfs storage in the VM - follow first steps at https://www.thegeekdiary.com/centos-rhel-7-configuring-an-nfs-server-and-nfs-client/:
 
 ```
-ansible-playbook -i inventory_aio /usr/share/ansible/openshift-ansible/playbooks/adhoc/uninstall.yml
+# yum install nfs-utils rpcbind # probably not necessary
+
+# systemctl enable nfs-server
+# systemctl enable rpcbind
+# systemctl enable nfs-lock
+# systemctl enable nfs-idmap
+
+#  systemctl start rpcbind
+#  systemctl start nfs-server
+#  systemctl start nfs-lock
+#  systemctl start nfs-idmap
+
+# systemctl status nfs
+
+# mkdir /srv/nfs  # where the hosts file expects the storage to be
+
+# vi /etc/exports
+/srv/nfs *(rw) 
+
+# exportfs -r   # export the files for storage
+
 ```
 
-### Workarounds
-
-There is a need for one or two workarounds when running the all-in-one disconnected:
-
-* The default route needs to be created for some internal elements of the OpenShift install
+* Run prerequisites playbook
 
 ```
-ip route add default via <ip address>
+# ansible-playbook -i inventory_aio /usr/share/ansible/openshift-ansible/playbooks/prerequisites.yml
 ```
 
-* A file needs to be created in /etc/origin/node/resolv.conf for the sdn pod to work correctly before running playbook
-
-```
-echo "nameserver 192.168.141.1" > /etc/origin/node/resolv.conf
-```
-
-* the docker config file in /etc/sysconfig/docker needs to have an insecure registry added (this is removed by the prerequisites playbook)
+* the docker config file in /etc/sysconfig/docker needs to have an insecure registry added (this is removed by the prerequisites playbook) - the registry is the address of the registry VM
 
 ```
 cat /etc/sysconfig/docker
@@ -271,9 +290,31 @@ OPTIONS=' --selinux-enabled     --insecure-registry=172.30.0.0/16 --insecure-reg
 [output redacted]
 ```
 
+* A file needs to be created in /etc/origin/node/resolv.conf for the sdn pod to work correctly before running the deploy playbook
+
+```
+# echo "nameserver 192.168.141.1" > /etc/origin/node/resolv.conf
+```
+
+* Run the deploy playbook
+
+```
+# ansible-playbook -i inventory_aio /usr/share/ansible/openshift-ansible/playbooks/deploy_cluster.yml
+```
+
+
+* To uninstall and clean up:
+
+```
+# ansible-playbook -i inventory_aio /usr/share/ansible/openshift-ansible/playbooks/adhoc/uninstall.yml
+```
+
+### Deployment into OCP
+
 * creating a deployable application is possible by directly referencng the images in the docker registry VM 
 
 ```
-oc new-app --docker-image="192.168.141.132:5000/openshift3/jenkins-2-rhel7:latest"
+# oc new-app --docker-image="192.168.141.132:5000/openshift3/jenkins-2-rhel7:latest"
 ```
-
+After this add a PVC as the default is not persistent - this can be done via the console
+Ensure that the image pull policy in the deployment config is set to IfNotPresent (edit the dc)
