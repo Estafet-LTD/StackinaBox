@@ -298,7 +298,7 @@ OPTIONS=' --selinux-enabled     --insecure-registry=172.30.0.0/16 --insecure-reg
 [output redacted]
 ```
 
-* A file needs to be created in /etc/origin/node/resolv.conf for the sdn pod to work correctly before running the deploy playbook
+* A file needs to be created in /etc/origin/node/resolv.conf for the sdn pod to work correctly before running the deploy playbook (create the folder the first time)
 
 ```
 # echo "nameserver 192.168.141.1" > /etc/origin/node/resolv.conf
