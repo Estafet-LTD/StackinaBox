@@ -278,10 +278,12 @@ $ systemctl enable docker
 
 ```
 
-* Run prerequisites playbook
+* add hosts file to /etc/ansible (default location) - example file is in this github repo
+
+* Run prerequisites playbook (assumes hosts file is in default location)
 
 ```
-# ansible-playbook -i inventory_aio /usr/share/ansible/openshift-ansible/playbooks/prerequisites.yml
+# ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/prerequisites.yml
 ```
 
 * the docker config file in /etc/sysconfig/docker needs to have an insecure registry added (this is removed by the prerequisites playbook) - the registry is the address of the registry VM
@@ -302,17 +304,17 @@ OPTIONS=' --selinux-enabled     --insecure-registry=172.30.0.0/16 --insecure-reg
 # echo "nameserver 192.168.141.1" > /etc/origin/node/resolv.conf
 ```
 
-* Run the deploy playbook
+* Run the deploy playbook (assumes hosts file is in default location)
 
 ```
-# ansible-playbook -i inventory_aio /usr/share/ansible/openshift-ansible/playbooks/deploy_cluster.yml
+# ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/deploy_cluster.yml
 ```
 
 
-* To uninstall and clean up:
+* To uninstall and clean up: (assumes hosts file is in default location)
 
 ```
-# ansible-playbook -i inventory_aio /usr/share/ansible/openshift-ansible/playbooks/adhoc/uninstall.yml
+# ansible-playbook  /usr/share/ansible/openshift-ansible/playbooks/adhoc/uninstall.yml
 ```
 
 ### Deployment into OCP
