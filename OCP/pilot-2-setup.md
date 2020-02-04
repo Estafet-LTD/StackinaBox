@@ -342,3 +342,24 @@ Ensure that the image pull policy in the deployment config is set to IfNotPresen
 # oc set volume dc/jenkins-2-rhel7 --remove --name=jenkins-2-rhel7-volume-1 # name of volume created
 # oc edit dc jenkins-2-rhel7   # and set ImagePullPolicy to IfNotPresent
 ```
+
+### Stopping the OCP Cluster
+
+```
+# sudo oc adm drain -l "a!=" --delete-local-data --ignore-daemonsets
+# sudo mv /etc/origin/node/pods /etc/origin/node/pods.stop
+# sudo systemctl stop atomic-openshift-node
+# sudo docker ps -q | xargs docker stop --time 30 ß this takes a while to shutdown the sdn by the looks of it
+# sudo systemctl stop docker
+```
+
+### Restarting the OCP Cluster
+
+```
+<add default route>
+# sudo systemctl start atomic-openshift-node ß failed to start automatically on boot for some reason (maybe the route)
+# sudo systemctl start docker ß already started but for completeness
+# sudo mv /etc/origin/node/pods.stop /etc/origin/node/pods
+… <have to wait until cluster is up now before can uncordon it> … ß might have to use oc status or oc whoami in a loop to wait until ready
+# sudo oc adm uncordon -l "a!="
+```
