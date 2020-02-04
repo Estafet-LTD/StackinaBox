@@ -175,7 +175,9 @@ curl http://192.168.141.132:5000
 60 Gb hard disk
 40 Gb nvme drive (for docker storage)
 
-Host only connection
+RHEL 7 + GUI + Development tools + System Admin tools, hostname ocp.example.com, user engineer
+
+Host only connection in VMWare
 
 NB may need to run dhclient on start up to force lease of (static) ip address
 
@@ -184,6 +186,8 @@ NB may need to run dhclient on start up to force lease of (static) ip address
  Follow some steps from https://blog.openshift.com/openshift-all-in-one-aio-for-labs-and-fun/ while keeping one eye on https://docs.openshift.com/container-platform/3.11/install/disconnected_install.html#disconnected-installing-openshift
  
  Steps follow:
+ 
+* Add engineer to sudoers group
  
 * Ensure Repo and Registry VMs are accessible (ping)
 
@@ -194,6 +198,8 @@ NB may need to run dhclient on start up to force lease of (static) ip address
 * create passwordless ssh key and copy to ocp.example.com then test ssh to self
 
 ```
+$ sudo -iH
+
 $ ssh-keygen
 
 $ ssh-copy-id ocp.example.com
