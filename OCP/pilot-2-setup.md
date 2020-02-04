@@ -252,7 +252,7 @@ $ systemctl restart docker
 $ systemctl enable docker
 ```
 
-* Create nfs storage in the VM - follow first steps at https://www.thegeekdiary.com/centos-rhel-7-configuring-an-nfs-server-and-nfs-client/:
+* Create nfs storage in the VM (these steps were taken from https://www.thegeekdiary.com/centos-rhel-7-configuring-an-nfs-server-and-nfs-client/):
 
 ```
 # yum install nfs-utils rpcbind # probably not necessary
