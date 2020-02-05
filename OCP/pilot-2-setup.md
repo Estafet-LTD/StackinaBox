@@ -195,6 +195,21 @@ NB may need to run dhclient on start up to force lease of (static) ip address
 
 * add ip address and hostname (op.example.com) to /etc/hosts file
 
+* set up dns resolution with dnsmasq
+  * set up a wildcard entry in a conf file below /etc/dnsmasq.d folder
+
+```
+$ cat /etc/dnsmasq.d/ocp.example.com.conf
+address=/ocp.example.com/192.168.1.30
+```
+
+  * ensure that /etc/resolv.conf refers to the address that dnsmasq is listening on
+
+```
+$ cat /etc/resolv.conf
+nameserver <ip address of VM>
+```
+
 * create passwordless ssh key and copy to ocp.example.com then test ssh to self
 
 ```
