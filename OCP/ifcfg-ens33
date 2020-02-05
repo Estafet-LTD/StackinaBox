@@ -1,0 +1,22 @@
+# place in /etc/sysconfig/network-scripts folder
+
+TYPE=Ethernet
+PROXY_METHOD=none
+BROWSER_ONLY=no
+BOOTPROTO=none
+DEFROUTE=yes
+GATEWAY=<static ip address>
+IPV4_FAILURE_FATAL=no
+IPV6INIT=yes
+IPV6_AUTOCONF=yes
+IPV6_DEFROUTE=yes
+IPV6_FAILURE_FATAL=no
+IPV6_ADDR_GEN_MODE=stable-privacy
+NAME=<adapter no e.g. ens33>
+DEVICE=<adapter no e.g. ens33>
+ONBOOT=yes
+IPV6_PRIVACY=no
+IPADDR=<static ip address>
+PREFIX=24
+PEERDNS=no
+DNS1=<static ip address>
