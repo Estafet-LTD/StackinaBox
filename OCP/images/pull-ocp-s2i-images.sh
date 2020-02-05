@@ -1,6 +1,6 @@
 docker pull registry.redhat.io/jboss-amq-6/amq63-openshift:latest
-docker pull registry.redhat.io/jboss-dapullrid-7/dapullrid71-openshift:latest
-docker pull registry.redhat.io/jboss-dapullrid-7/dapullrid71-client-openshift:latest
+docker pull registry.redhat.io/jboss-datagrid-7/datagrid71-openshift:latest
+docker pull registry.redhat.io/jboss-datagrid-7/datagrid71-client-openshift:latest
 docker pull registry.redhat.io/jboss-datavirt-6/datavirt63-openshift:latest
 docker pull registry.redhat.io/jboss-datavirt-6/datavirt63-driver-openshift:latest
 docker pull registry.redhat.io/jboss-decisionserver-6/decisionserver64-openshift:latest
