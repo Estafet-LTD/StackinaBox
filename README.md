@@ -13,6 +13,14 @@ Initial version will be manually provisioned. Later it will be scripted so that 
 
 RHEL will be used for production
 
+## Pilot (see pilot-setup.md)
+
+Initial pilot for OCP was manually configured using _oc cluster up_ but this was not easy to build disconnected
+
+## Pilot 2 (see pilot2-setup.md)
+
+Second pilot was built entirely disconnected using openshift-ansible playbooks
+
 ## Software to be included:
 
 ### IDE VM
