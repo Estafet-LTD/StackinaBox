@@ -5,6 +5,7 @@ A project designed to create a development environment consisting of an IDE and 
 Two runtime VMs will be created with one infra VM
 
 IDE - containing an Eclipse development environment
+
 OCP - containing an OpenShift cluster
 
 Infra - for offline installation of OCP cluster containing RH repositories and image registries
@@ -35,3 +36,8 @@ RHEL 7 VM (VMWare)
 * OpenShift all-in-one cluster with Jenkins, SonarQube 
 * Gitea 
 * Nexus
+
+### Infra VM
+RHEL 7 VM (VMWare)
+* Red Hat repos
+* Required images
