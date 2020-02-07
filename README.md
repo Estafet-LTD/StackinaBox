@@ -14,6 +14,8 @@ Initial version will be manually provisioned. Later it will be scripted so that 
 
 RHEL will be used for production
 
+![diagram](https://Estafet-LTD/StackinaBox/master/SIAB-infra-overview.png "VM connections")
+
 ## Pilot (see pilot-setup.md)
 
 Initial pilot for OCP was manually configured using _oc cluster up_ but this was not easy to build disconnected
