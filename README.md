@@ -17,7 +17,7 @@ RHEL will be used for production
 
 Initial pilot for OCP was manually configured using _oc cluster up_ but this was not easy to build disconnected
 
-## Pilot 2 (see pilot2-setup.md)
+## Pilot 2 (see pilot-2-setup.md)
 
 Second pilot was built entirely disconnected using openshift-ansible playbooks
 
