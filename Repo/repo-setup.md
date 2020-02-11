@@ -203,3 +203,46 @@ $ docker run -d -p 5000:5000 --restart=always --name registry -v "$(pwd)"/auth:/
 -e "REGISTRY_AUTH_HTPASSWD_REALM=Registry Realm" -e REGISTRY_AUTH_HTPASSWD_PATH=/auth/htpasswd -v "$(pwd)"/docker-certs:/certs \
 -e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/registry.crt -e REGISTRY_HTTP_TLS_KEY=/certs/registry.key registry:2
 ```
+
+### Load, tag, and push images into the Docker registry
+
+* Pull the required docker images into the registry using the scripts:
+
+```
+$ ./pull-ocp-base-images.sh
+$ ./pull-ocp-opt-images.sh
+$ ./pull-ocp-s2i-images.sh
+```
+
+* OPTIONAL Save the required docker images into tar files on the shared folder using the scripts NB this will not be necessary if the registry server is connected and there is no need for the registry to be held elsewhere
+
+```
+$ cd /mnt/hgfs/SF #  shared folder
+$ ./save-ocp-base-images.sh
+$ ./save-ocp-opt-images.sh
+$ ./save-ocp-s2i-images.sh
+```
+
+* OPTIONAL Load the required docker images from the tar files on the shared folder using the scripts NB this will not be necessary if the registry server is connected and there is no need for the registry to be held elsewhere
+
+```
+$ cd /mnt/hgfs/SF #  shared folder
+$ docker load -i ose3-images.tar
+$ docker load -i ose3-optional-images.tar
+$ docker load -i ose3-s2i-images.tar
+```
+
+* Tag all the images and push to the outward-facing docker registry
+
+```
+$ cd /mnt/hgfs/SF #  shared folder
+$ ./tag-ocp-base-images.sh
+$ ./tag-ocp-opt-images.sh
+$ ./tag-ocp-s2i-images.sh
+
+$ cd /mnt/hgfs/SF #  shared folder
+$ ./push-ocp-base-images.sh
+$ ./push-ocp-opt-images.sh
+$ ./push-ocp-s2i-images.sh
+```
+
