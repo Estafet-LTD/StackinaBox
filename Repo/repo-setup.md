@@ -162,3 +162,8 @@ $ firewall-cmd --reload
 $ systemctl enable httpd
 $ systemctl start httpd
 ```
+
+* Test connectivity to Apache from another VM
+```
+$ curl http://repo.thales.com # should respond with Apache main page
+```
