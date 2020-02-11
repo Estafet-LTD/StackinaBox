@@ -17,7 +17,56 @@ root / rootpassw0rd
 
 engineer / passw0rd
 
-IP: 10.0.2.1 ocp.thales.com
+hostname: ocp.thales.com
+
+IP: 10.0.2.1 
+
+## Network setup
+
+Set up the host only network by th efollowing:
+
+* Update /etc/hosts file and add the following lines
+
+```
+10.0.2.1 ocp.thales.com
+10.0.2.2 ide.thales.com
+10.0.2.3 repo.thales.com
+```
+
+* Identify the network adapter for host only managed by VMWare (e.g. ens33)
+
+* Edit the file at /etc/sysconfig/network-scripts/ifcfg-<adapter name>
+    
+ ```
+# cat /etc/sysconfig/network-scripts/ifcfg-<adapter name>
+TYPE=Ethernet
+PROXY_METHOD=none
+BROWSER_ONLY=no
+BOOTPROTO=none
+DEFROUTE=yes
+GATEWAY=10.0.2.1
+IPV4_FAILURE_FATAL=no
+IPV6INIT=yes
+IPV6_AUTOCONF=yes
+IPV6_DEFROUTE=yes
+IPV6_FAILURE_FATAL=no
+IPV6_ADDR_GEN_MODE=stable-privacy
+NAME=<adapter name>
+DEVICE=<adapter name>
+ONBOOT=yes
+IPV6_PRIVACY=no
+IPADDR=10.0.2.1
+PREFIX=24
+PEERDNS=no
+DNS1=10.0.2.1
+```   
+
+* Add a file under /etc/dnsmasq.d named ocp.thales.com.conf. This will configure the dnsmasq wildcard
+
+``` 
+# cat /etc/dnsmasq.d/ocp.thales.com.conf
+address=/ocp.thales.com/10.0.2.1
+``` 
 
 ## Set up
 
