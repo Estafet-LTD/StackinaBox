@@ -134,3 +134,31 @@ do
   createrepo -v </OCP/repos/>${repo} -o </OCP/repos/>${repo} 
 done
 ```
+
+### Install HTTPD server
+
+* Install httpd
+
+```
+$ yum install httpd
+```
+
+* Place repo files into apache's root folder
+
+```
+$ mv /OCP/repos /var/www/html/
+$ chmod -R +r /var/www/html/repos
+$ restorecon -vR /var/www/html
+```
+
+* Add firewall rules and restart
+```
+$ firewall-cmd --permanent --add-service=http
+$ firewall-cmd --reload
+```
+
+* Enable and start Apache
+```
+$ systemctl enable httpd
+$ systemctl start httpd
+```
