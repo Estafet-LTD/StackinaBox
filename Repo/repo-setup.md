@@ -167,3 +167,7 @@ $ systemctl start httpd
 ```
 $ curl http://repo.thales.com # should respond with Apache main page
 ```
+
+### Set up Docker
+
+* enable and start Docker
