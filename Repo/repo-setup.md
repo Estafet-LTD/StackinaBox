@@ -171,3 +171,15 @@ $ curl http://repo.thales.com # should respond with Apache main page
 ### Set up Docker
 
 * enable and start Docker
+
+```
+$ systemctl enable docker
+$ systemctl start docker
+```
+
+* generate a new self-signed certificate for the secure Docker registry
+
+```
+$ openssl req -newkey rsa:4096 -nodes -sha256 -keyout /etc/ssl/certs/registry.key -x509 -days 1825 -out /etc/ssl/certs/registry.crt
+# Fill out the various requirements such as country code etc as appropriate
+```
