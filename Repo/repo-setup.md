@@ -183,3 +183,23 @@ $ systemctl start docker
 $ openssl req -newkey rsa:4096 -nodes -sha256 -keyout /etc/ssl/certs/registry.key -x509 -days 1825 -out /etc/ssl/certs/registry.crt
 # Fill out the various requirements such as country code etc as appropriate
 ```
+
+* Disable SELinux
+
+When SELinux is enforcing the docker registry has permthe ission issues around reading the certificates
+
+Edit the /etc/selinux/config file and set SELINUX=disabled. 
+
+Reboot
+
+* Start secure docker registry with basic authentication
+
+```
+$ mkdir docker-certs
+$ cp -a /etc/ssl/certs/. docker-certs
+$ mkdir auth
+$ docker run --entrypoint htpasswd registry:2 -Bbn engineer passw0rd > auth/htpasswd 
+$ docker run -d -p 5000:5000 --restart=always --name registry -v "$(pwd)"/auth:/auth -e "REGISTRY_AUTH=htpasswd" \
+-e "REGISTRY_AUTH_HTPASSWD_REALM=Registry Realm" -e REGISTRY_AUTH_HTPASSWD_PATH=/auth/htpasswd -v "$(pwd)"/docker-certs:/certs \
+-e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/registry.crt -e REGISTRY_HTTP_TLS_KEY=/certs/registry.key registry:2
+```
