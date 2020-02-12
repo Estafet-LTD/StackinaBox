@@ -140,7 +140,7 @@ $ docker-storage-setup
 * Check the results
 
 ```
-lsblk
+$ lsblk
 NAME          MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
 sda             8:0    0   60G  0 disk 
 ├─sda1          8:1    0    1G  0 part /boot
@@ -167,26 +167,26 @@ $ systemctl enable docker
 * Create nfs storage in the VM (these steps were taken from https://www.thegeekdiary.com/centos-rhel-7-configuring-an-nfs-server-and-nfs-client/):
 
 ```
-# yum install nfs-utils rpcbind # probably not necessary
+$ yum install nfs-utils rpcbind # probably already installed
 
-# systemctl enable nfs-server
-# systemctl enable rpcbind
-# systemctl enable nfs-lock
-# systemctl enable nfs-idmap
+$ systemctl enable nfs-server
+$ systemctl enable rpcbind
+$ systemctl enable nfs-lock
+$ systemctl enable nfs-idmap
 
-#  systemctl start rpcbind
-#  systemctl start nfs-server
-#  systemctl start nfs-lock
-#  systemctl start nfs-idmap
+$  systemctl start rpcbind
+$  systemctl start nfs-server
+$  systemctl start nfs-lock
+$  systemctl start nfs-idmap
 
-# systemctl status nfs
+$ systemctl status nfs
 
-# mkdir /srv/nfs  # where the hosts file expects the storage to be
+$ mkdir /srv/nfs  # where the hosts file expects the storage to be
 
-# vi /etc/exports
+$ vi /etc/exports
 /srv/nfs *(rw) 
 
-# exportfs -r   # export the files for storage
+$ exportfs -r   # export the files for storage
 
 ```
 
