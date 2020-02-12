@@ -68,6 +68,14 @@ DNS1=10.0.2.1
 address=/ocp.thales.com/10.0.2.1
 ``` 
 
+* ensure that /etc/resolv.conf refers to the address that dnsmasq is listening on
+
+```
+$ cat /etc/resolv.conf
+nameserver 10.0.2.1
+```
+
+
 ## Set up
 
  The below is based on steps from https://blog.openshift.com/openshift-all-in-one-aio-for-labs-and-fun/ while keeping one eye on https://docs.openshift.com/container-platform/3.11/install/disconnected_install.html#disconnected-installing-openshift
@@ -80,23 +88,6 @@ address=/ocp.thales.com/10.0.2.1
 
 * Ensure _ifconfig_ resolves with static IP address - run _sudo dhclient_ if necessary
 
-* add ip address and hostname (op.example.com) to /etc/hosts file
-
-* set up dns resolution with dnsmasq
-  * set up a wildcard entry in a conf file below /etc/dnsmasq.d folder
-
-```
-$ cat /etc/dnsmasq.d/ocp.example.com.conf
-address=/ocp.example.com/192.168.1.30
-```
-
-  * ensure that /etc/resolv.conf refers to the address that dnsmasq is listening on
-
-```
-$ cat /etc/resolv.conf
-nameserver <ip address of VM>
-```
-
 * create passwordless ssh key and copy to ocp.example.com then test ssh to self
 
 ```
@@ -105,11 +96,6 @@ $ sudo -iH
 $ ssh-keygen
 
 $ ssh-copy-id ocp.example.com
-```
-* add default route
-
-```
-ip route add default via <ip address>
 ```
 
 * create file _ose.repo_ in folder /etc/yum/repos.d  (see sample in folder)
