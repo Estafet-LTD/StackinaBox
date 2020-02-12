@@ -82,6 +82,8 @@ nameserver 10.0.2.1
  
  Steps follow:
  
+ ### Install required packages
+ 
 * Add engineer to sudoers group
  
 * Ensure Repo and Registry VMs are accessible (ping)
@@ -105,6 +107,8 @@ $ ssh-copy-id ocp.example.com
 ```
 $ yum -y install atomic-openshift-clients openshift-ansible
 ```
+
+### Install docker
 
 * Install docker
 
@@ -133,12 +137,32 @@ $ docker-storage-setup
 
 ```
 
+* Check the results
+
+```
+lsblk
+NAME          MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda             8:0    0   60G  0 disk 
+├─sda1          8:1    0    1G  0 part /boot
+└─sda2          8:2    0   59G  0 part 
+  ├─rhel-root 253:0    0 35.6G  0 lvm  /
+  ├─rhel-swap 253:1    0    6G  0 lvm  [SWAP]
+  └─rhel-home 253:2    0 17.4G  0 lvm  /home
+sr0            11:0    1  4.2G  0 rom  /run/media/engineer/RHEL-7.7 Server.x86_6
+nvme0n1       259:0    0   40G  0 disk 
+└─nvme0n1p1   259:1    0   40G  0 part 
+  └─docker--vg-docker--lv
+              253:3    0   40G  0 lvm  /var/lib/docker
+```
+
 * Restart docker and enable docker
 
 ```
 $ systemctl restart docker
 $ systemctl enable docker
 ```
+
+### Create nfs storage for OCP
 
 * Create nfs storage in the VM (these steps were taken from https://www.thegeekdiary.com/centos-rhel-7-configuring-an-nfs-server-and-nfs-client/):
 
@@ -166,24 +190,14 @@ $ systemctl enable docker
 
 ```
 
+### Install OCP
+
 * add hosts file to /etc/ansible (default location) - example file is in this github folder
 
 * Run prerequisites playbook (assumes hosts file is in default location)
 
 ```
 # ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/prerequisites.yml
-```
-
-* the docker config file in /etc/sysconfig/docker needs to have an insecure registry added (this is removed by the prerequisites playbook) - the registry is the address of the registry VM
-
-```
-cat /etc/sysconfig/docker
-# /etc/sysconfig/docker
-
-# Modify these options if you want to change the way the docker daemon runs
-OPTIONS=' --selinux-enabled     --insecure-registry=172.30.0.0/16 --insecure-registry=192.168.141.132:5000   --signature-verification=False'
-
-[output redacted]
 ```
 
 * A file needs to be created in /etc/origin/node/resolv.conf for the sdn pod to work correctly before running the deploy playbook (create the folder the first time)
