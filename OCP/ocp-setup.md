@@ -166,7 +166,7 @@ $ systemctl enable docker
 
 ```
 
-* add hosts file to /etc/ansible (default location) - example file is in this github repo
+* add hosts file to /etc/ansible (default location) - example file is in this github folder
 
 * Run prerequisites playbook (assumes hosts file is in default location)
 
