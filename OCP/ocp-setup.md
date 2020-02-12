@@ -190,6 +190,37 @@ $ exportfs -r   # export the files for storage
 
 ```
 
+### Set up trust for self signed cert in Repo VM
+
+* Copy the registry.crt file created in the _Repo VM_ for the secure docker registry to a shared folder
+
+* Copy the cert file to /etc/pki/ca-trust/source/anchors folder on the _OCP VM_
+
+* run command to update the global trust settings
+
+```
+$ update-ca-trust
+
+```
+
+* restart docker on the VM to refresh based on the global trust settings
+
+```
+$ systemctl restart docker
+```
+
+* test login 
+
+```
+$ docker login repo.thales.com:5000
+Username: engineer
+Password: 
+Login Succeeded
+
+$ docker logout repo.thales.com:5000
+Removing login credentials for repo.thales.com:5000
+```
+
 ### Install OCP
 
 * add hosts file to /etc/ansible (default location) - example file is in this github folder
