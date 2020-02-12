@@ -60,7 +60,7 @@ openshift_enable_unsupported_configurations=true
 ###########################################################################
 ### Cluster vars
 ###########################################################################
-openshift_docker_insecure_registries=192.168.141.132:5000
+#openshift_docker_insecure_registries=192.168.141.132:5000
 
 
 ###########################################################################
@@ -76,11 +76,11 @@ openshift_docker_insecure_registries=192.168.141.132:5000
 ###########################################################################
 
 # NOTE: Need credentials from: https://access.redhat.com/terms-based-registry/
-oreg_url=192.168.141.132:5000/openshift3/ose-${component}:${version}
+oreg_url=repo.thales.com:5000/openshift3/ose-${component}:${version}
 #oreg_url=docker-registry.repo.ukdn.thalesuk/openshift3/ose-${component}:${version}
 #oreg_url=registry.redhat.io/openshift3/ose-${component}:${version}
-#oreg_auth_user={{REGISTY_USER}}
-#oreg_auth_password={{REGISTRY_TOKEN}}
+oreg_auth_user=engineer
+oreg_auth_password=passw0rd
 
 # For Operator Framework Images
 #openshift_additional_registry_credentials=[{'host':'registry.connect.redhat.com','user':'{{REGISTY_USER}}','password':'{{REGISTRY_TOKEN}}','test_image':'mongodb/enterprise-operator:0.3.2'}]
@@ -102,10 +102,10 @@ openshift_master_console_port=8443
 
 #Default:  openshift_master_cluster_method=native
 # Internal cluster name
-openshift_master_cluster_hostname=ocp.example.com
+openshift_master_cluster_hostname=ocp.thales.com
 
 # NOTE: Default wildcard domain for applications
-openshift_master_default_subdomain=apps.ocp.example.com
+openshift_master_default_subdomain=apps.ocp.thales.com
 
 ###########################################################################
 ### OpenShift Network Vars
@@ -269,7 +269,7 @@ openshift_hosted_registry_selector="node-role.kubernetes.io/infra=true"
 
 # default=true
 openshift_enable_service_catalog=false
-openshift_service_catalog_image_prefix=192.168.141.132:5000/
+openshift_service_catalog_image_prefix=repo.thales.com:5000/
 openshift_service_catalog_image_version=latest
 
 # default=true
@@ -297,18 +297,18 @@ etcd
 nodes
 
 [nfs]
-ocp.example.com 
+ocp.thales.com 
 
 [masters]
-ocp.example.com
+ocp.thales.com
 
 [etcd]
-ocp.example.com
+ocp.thales.com
 
 [nodes]
 ## All-In-One with CRI-O
 #ocp.example.com openshift_node_group_name='node-config-all-in-one-crio' openshift_node_problem_detector_install=true
-ocp.example.com openshift_node_group_name='node-config-all-in-one' openshift_node_problem_detector_install=true
+ocp.thales.com openshift_node_group_name='node-config-all-in-one' openshift_node_problem_detector_install=true
 
 #
 # END OF FILE
