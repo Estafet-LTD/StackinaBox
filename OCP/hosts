@@ -10,17 +10,17 @@
 ###########################################################################
 #
 ## All-in-One (AIO) SERVER WITH EMBEDDED NFS:
-# - assume AIO node name:       ocp.example.com
-# - assume app wildcard name:   *.apps.ocp.example.com
+# - assume AIO node name:       ocp.thales.com
+# - assume app wildcard name:   *.apps.ocp.thales.com
 # - assume NFS server configure to export /srv/nfs
 # - using docker or CRI-O
 #
 ## If using dnsmasq as the DNS for the lab, the entry will be:
-# $ cat /etc/dnsmasq.d/ocp.example.com.conf
-# address=/ocp.example.com/192.168.1.30
+# $ cat /etc/dnsmasq.d/ocp.thales.com.conf
+# address=/ocp.thales.com/10.0.2.1
 #
 # Where the IP is the IP of your RHEL AIO server. This entry will also
-# resolve anything *.ocp.example.com to the same IP address.
+# resolve anything *.ocp.thales.com to the same IP address.
 #
 ## NOTE 2: Some services have been set to use *ephemeral* storage
 #
