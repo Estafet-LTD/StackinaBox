@@ -228,21 +228,36 @@ Removing login credentials for repo.thales.com:5000
 * Run prerequisites playbook (assumes hosts file is in default location)
 
 ```
-# ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/prerequisites.yml
+$ ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/prerequisites.yml
 ```
 
 * A file needs to be created in /etc/origin/node/resolv.conf for the sdn pod to work correctly before running the deploy playbook (create the folder the first time)
 
 ```
-# echo "nameserver <ip address of host only adapter>" > /etc/origin/node/resolv.conf
+$ echo "nameserver <ip address of host only adapter>" > /etc/origin/node/resolv.conf
 ```
 
 * Run the deploy playbook (assumes hosts file is in default location)
 
 ```
-# ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/deploy_cluster.yml
+$ ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/deploy_cluster.yml
 ```
 
+* Test that the OCP cluster is up and running
+
+```
+$ oc whoami
+system:admin
+$ oc get pods --all-namespaces
+
+ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/deploy_cluster.yml
+```
+
+* Add cluster admin rights to the engineer user
+
+```
+$ oc adm policy add-cluster-role-to-user admin engineer
+```
 
 * To uninstall and clean up: (assumes hosts file is in default location)
 
