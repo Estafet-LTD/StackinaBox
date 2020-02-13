@@ -189,6 +189,10 @@ $ vi /etc/exports
 $ exportfs -r   # export the files for storage
 
 $  systemctl restart nfs-server
+
+$ firewall-cmd --add-service=nfs --zone=internal --permanent
+$ firewall-cmd --add-service=mountd --zone=internal --permanent
+$ firewall-cmd --add-service=rpc-bind --zone=internal --permanent
 ```
 
 ### Set up trust for self signed cert in Repo VM
