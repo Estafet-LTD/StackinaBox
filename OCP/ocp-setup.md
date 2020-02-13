@@ -97,7 +97,7 @@ $ sudo -iH
 
 $ ssh-keygen
 
-$ ssh-copy-id ocp.example.com
+$ ssh-copy-id ocp.thales.com
 ```
 
 * create file _ose.repo_ in folder /etc/yum/repos.d  (see sample in folder)
