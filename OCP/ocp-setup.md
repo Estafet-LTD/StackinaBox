@@ -188,6 +188,7 @@ $ vi /etc/exports
 
 $ exportfs -r   # export the files for storage
 
+$  systemctl restart nfs-server
 ```
 
 ### Set up trust for self signed cert in Repo VM
