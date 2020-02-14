@@ -104,17 +104,17 @@ $ subscription-manager attach --pool=<pool id>
 $ subscription-manager repos --disable="*"
 ```
 
-* Enable OpenShift repos 
+* Enable OpenShift repos **NB the build asks for Ansible 2.8 but there are issues (see OCP-setup) so Ansible 2.6 was used**
 
 ```
 $ subscription-manager repos \
     --enable="rhel-7-server-rpms" \
     --enable="rhel-7-server-extras-rpms" \
     --enable="rhel-7-server-ose-3.11-rpms" \
-    --enable="rhel-7-server-ansible-2.8-rpms"
+    --enable="rhel-7-server-ansible-2.8-rpms" # --enable="rhel-7-server-ansible-2.6-rpms"
 ```
 
-* Install required packages, reate a directory for the repos
+* Install required packages, create a directory for the repos
 
 ```
 $ sudo yum -y install yum-utils createrepo docker git
@@ -127,7 +127,7 @@ $ mkdir -p /OCP/repos
 $ for repo in \
 rhel-7-server-rpms \
 rhel-7-server-extras-rpms \
-rhel-7-server-ansible-2.8-rpms \
+rhel-7-server-ansible-2.8-rpms \ # rhel-7-server-ansible-2.6-rpms
 rhel-7-server-ose-3.11-rpms
 do
   reposync --gpgcheck -lm --repoid=${repo} --download_path=</OCP/repos> 
@@ -186,7 +186,7 @@ $ openssl req -newkey rsa:4096 -nodes -sha256 -keyout /etc/ssl/certs/registry.ke
 
 * Disable SELinux
 
-When SELinux is enforcing the docker registry has permthe ission issues around reading the certificates
+When SELinux is **enforcing** the docker registry has permission issues around reading the certificates
 
 Edit the /etc/selinux/config file and set SELINUX=disabled. 
 
