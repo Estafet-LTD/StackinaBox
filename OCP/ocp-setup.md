@@ -354,9 +354,127 @@ Bye
 ```
 $ wget repo.thales.com/gitea/gitea
 $ chmod +x gitea
-$ mv gitea /usr/local/bin/gitea
+$ mv gitea /usr/bin/gitea
 $ gitea --version
+Gitea version 1.11.0 built with GNU Make 4.1, go1.13.7 : bindata, sqlite, sqlite_unlock_notify
 ```
+
+* Create a service for gitea and populate it
+
+```
+touch /etc/systemd/system/gitea.service  create the service file
+cat /etc/systemd/system/gitea.service
+[Unit]
+Description=Gitea (Git with a cup of tea)
+After=syslog.target
+After=network.target
+After=mariadb.service
+
+[Service]
+# Modify these two values and uncomment them if you have
+# repos with lots of files and get an HTTP error 500 because
+# of that
+###
+#LimitMEMLOCK=infinity
+#LimitNOFILE=65535
+RestartSec=2s
+Type=simple
+User=git
+Group=git
+WorkingDirectory=/var/lib/gitea/
+ExecStart=/usr/bin/gitea web -c /etc/gitea/app.ini
+Restart=always
+Environment=USER=git HOME=/home/git GITEA_WORK_DIR=/var/lib/gitea
+# If you want to bind Gitea to a port below 1024 uncomment
+# the two values below
+###
+#CapabilityBoundingSet=CAP_NET_BIND_SERVICE
+#AmbientCapabilities=CAP_NET_BIND_SERVICE
+
+[Install]
+WantedBy=multi-user.target
+```
+
+* Via a web browser go to http://ocp.thales.com/install and set up the gitea information 
+Alternatively edit the app.ini file
+
+```
+$ cat /etc/gitea/app.ini
+
+APP_NAME = Gitea: Git with a cup of tea
+RUN_USER = git
+RUN_MODE = prod
+
+[oauth2]
+JWT_SECRET = 59DFTWnPjQNUpJ9kYBbBddy_jR5TRq6hzhWFfhttchQ
+
+[security]
+INTERNAL_TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE1ODE2ODY1OTl9.nK0PM79aP6au0fS3X5Hb0odXI3Ci99OVUx-gqzddbvA
+INSTALL_LOCK   = true
+SECRET_KEY     = zc6R78wo1mnHpyI8WtX1vb6cOn0bRdEdlW0oearcBh5nPGR3VLlRqcbbJeOdE6Rt
+
+[database]
+DB_TYPE  = mysql
+HOST     = ocp.thales.com:3306
+NAME     = gitea
+USER     = gitea
+PASSWD   = giteapassw0rd
+SSL_MODE = disable
+CHARSET  = utf8
+PATH     = /var/lib/gitea/data/gitea.db
+
+[repository]
+ROOT = /home/git/gitea-repositories
+
+[server]
+SSH_DOMAIN       = localhost
+DOMAIN           = localhost
+HTTP_PORT        = 3000
+ROOT_URL         = http://ocp.thales.com:3000/
+DISABLE_SSH      = false
+SSH_PORT         = 22
+LFS_START_SERVER = true
+LFS_CONTENT_PATH = /var/lib/gitea/data/lfs
+LFS_JWT_SECRET   = JP9NiIw3eDR-TXfN5NfnWbhM2pbUuDkNLpHOi89p3UU
+OFFLINE_MODE     = false
+
+[mailer]
+ENABLED = false
+
+[service]
+REGISTER_EMAIL_CONFIRM            = false
+ENABLE_NOTIFY_MAIL                = false
+DISABLE_REGISTRATION              = false
+ALLOW_ONLY_EXTERNAL_REGISTRATION  = false
+ENABLE_CAPTCHA                    = false
+REQUIRE_SIGNIN_VIEW               = false
+DEFAULT_KEEP_EMAIL_PRIVATE        = false
+DEFAULT_ALLOW_CREATE_ORGANIZATION = true
+DEFAULT_ENABLE_TIMETRACKING       = true
+NO_REPLY_ADDRESS                  = noreply.localhost
+
+[picture]
+DISABLE_GRAVATAR        = false
+ENABLE_FEDERATED_AVATAR = true
+
+[openid]
+ENABLE_OPENID_SIGNIN = true
+ENABLE_OPENID_SIGNUP = true
+
+[session]
+PROVIDER = file
+
+[log]
+MODE      = file
+LEVEL     = info
+ROOT_PATH = /var/lib/gitea/log
+```
+
+* Create a gitea user via the Register option at http://ocp.thales.com:3000/user/sign_up
+
+Username: engineer
+Email address: engineer@ocp.thales.com
+Password: Passw0rd!
 
 
 ## Deployment into OCP
