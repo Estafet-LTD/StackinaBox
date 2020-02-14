@@ -476,6 +476,17 @@ Username: engineer
 Email address: engineer@ocp.thales.com
 Password: Passw0rd!
 
+* Open the firewall for gitea from other network users
+
+```
+iptables -I INPUT -p tcp -m tcp --dport 80 -j ACCEPT
+```
+
+* Test the gitea connection from another VM
+
+```
+curl http://ocp.thales.com:3000
+```
 
 ## Deployment into OCP
 
