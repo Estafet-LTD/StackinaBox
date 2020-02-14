@@ -259,10 +259,10 @@ $ oc get pods --all-namespaces
 ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/deploy_cluster.yml
 ```
 
-* Add cluster admin rights to the engineer user
+* Add cluster admin rights to the developer user
 
 ```
-$ oc adm policy add-cluster-role-to-user admin engineer
+$ oc adm policy add-cluster-role-to-user admin developer
 ```
 
 * To uninstall and clean up: (assumes hosts file is in default location)
