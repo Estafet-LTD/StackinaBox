@@ -246,3 +246,14 @@ $ ./push-ocp-opt-images.sh
 $ ./push-ocp-s2i-images.sh
 ```
 
+### Download gitea binaries
+
+* Pull gitea into repo VM
+
+```
+$ yum install wget
+
+$ wget -O gitea https://dl.gitea.io/gitea/1.6.1/gitea-1.6.1-linux-amd64
+$ mkdir /var/www/html/gitea
+$ mv gitea /var/www/html/gitea
+```
