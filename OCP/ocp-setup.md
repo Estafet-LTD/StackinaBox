@@ -265,6 +265,20 @@ ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/deploy_cluster.y
 $ oc adm policy add-cluster-role-to-user admin developer
 ```
 
+* (optional) Remove default image streams and templates - need to find how to not load them in the first place
+
+```
+$ oc delete is --all -n openshift
+$ oc delete templates --all -n openshift
+```
+
+* (optional) Add required image streams and templates - see example file in this folder
+
+```
+$ oc create -f /usr/share/openshift/examples/image-streams/image-streams-rhel7-thales.json 
+```
+
+
 * To uninstall and clean up: (assumes hosts file is in default location)
 
 ```
