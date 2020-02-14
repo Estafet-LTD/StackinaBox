@@ -272,10 +272,11 @@ $ oc delete is --all -n openshift
 $ oc delete templates --all -n openshift
 ```
 
-* (optional) Add required image streams and templates - see example file in this folder
+* (optional) Add required image streams - see example file in this folder. Also add any required templates
 
 ```
 $ oc create -f /usr/share/openshift/examples/image-streams/image-streams-rhel7-thales.json 
+$ oc create -f /usr/share/openshift/examples/quickstart-templates/jenkins-persistent-template.json
 ```
 
 
