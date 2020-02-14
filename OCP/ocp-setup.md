@@ -101,6 +101,7 @@ $ ssh-copy-id ocp.thales.com
 ```
 
 * create file _ose.repo_ in folder /etc/yum/repos.d  (see sample in folder)
+**NB when using Ansible 2.8 the OSE build fails with an error around the persistent volume for registry not being created. For this reason the build was done using Ansible 2.6**
 
 * Install ansible etc.
 
