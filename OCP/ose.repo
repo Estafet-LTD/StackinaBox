@@ -18,3 +18,9 @@ name=rhel-7-server-ose-3.11-rpms
 baseurl=http://repo.thales.com/repos/rhel-7-server-ose-3.11-rpms 
 enabled=1
 gpgcheck=0
+# the following configuration was used to load Ansible 2.6 from the repo to fix issue with 2.8 build
+# [rhel-7-server-ansible-2.8-rpms]
+# name=rhel-7-server-ansible-2.8-rpms
+# baseurl=http://repo.thales.com/repos/rhel-7-server-ansible-2.6-rpms 
+# enabled=1
+# gpgcheck=0
