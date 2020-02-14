@@ -23,7 +23,7 @@ IP: 10.0.2.1
 
 ## Network setup
 
-Set up the host only network by th efollowing:
+Set up the host only network by the following:
 
 * Update /etc/hosts file and add the following lines
 
@@ -268,8 +268,96 @@ $ oc adm policy add-cluster-role-to-user admin engineer
 * To uninstall and clean up: (assumes hosts file is in default location)
 
 ```
-# ansible-playbook  /usr/share/ansible/openshift-ansible/playbooks/adhoc/uninstall.yml
+$ ansible-playbook  /usr/share/ansible/openshift-ansible/playbooks/adhoc/uninstall.yml
 ```
+
+### Install gitea
+
+The following steps are based on instructions at https://computingforgeeks.com/how-to-install-gitea-self-hosted-git-service-on-centos-7-with-nginx-reverse-proxy/
+
+* install required packages
+
+```
+$ yum -y install git wget vim bash-completion mariadb-server
+```
+
+* add git user account to be used by gitea
+
+```
+$ sudo useradd \
+   --system \
+   --shell /bin/bash \
+   --comment 'Git Version Control' \
+   --create-home \
+   --home-dir /home/git \
+   git
+```
+
+* create directory structure
+```
+$ mkdir -p /etc/gitea /var/lib/gitea/{custom,data,indexers,public,log}
+$ chown git:git /var/lib/gitea/{data,indexers,log}
+$ chmod 750 /var/lib/gitea/{data,indexers,log}
+$ chown root:git /etc/gitea
+$ chmod 770 /etc/gitea
+```
+
+* install and configure maria db service
+
+```
+$ systemctl enable mariadb.service
+$ systemctl start mariadb.service
+
+$ sudo mysql_secure_installation
+# when prompted enter the following details
+Enter current password for root (enter for none): Just press the Enter
+Set root password? [Y/n]: Y
+New password: rootpassw0rd
+Re-enter new password: rootpassw0rd
+Remove anonymous users? [Y/n]: Y
+Disallow root login remotely? [Y/n]: Y
+Remove test database and access to it? [Y/n]:  Y
+Reload privilege tables now? [Y/n]:  Y
+
+$ systemctl restart mariadb.service
+
+
+```
+
+* create a database for gitea
+
+```
+$ mysql -u root -p
+Enter password: rootpassw0rd
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 608168
+Server version: 10.3.9-MariaDB MariaDB Server
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> CREATE DATABASE gitea;
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [(none)]> GRANT ALL PRIVILEGES ON gitea.* TO 'gitea'@'localhost' IDENTIFIED BY "giteapassw0rd";
+Query OK, 0 rows affected (0.001 sec)
+
+MariaDB [(none)]> FLUSH PRIVILEGES;
+Query OK, 0 rows affected (0.002 sec)
+MariaDB [(none)]> exit
+Bye
+```
+
+* install and configure gitea
+
+```
+$ wget repo.thales.com/gitea/gitea
+$ chmod +x gitea
+$ mv gitea /usr/local/bin/gitea
+$ gitea --version
+```
+
 
 ## Deployment into OCP
 
@@ -278,43 +366,43 @@ Creating a deployable application is possible by directly referencing the images
 * Create a new project jenkins then pull the image and create a new app
 
 ```
-# oc new project jenkins
-# docker pull 192.168.141.132:5000/openshift3/jenkins-2-rhel7:latest  # pull into local registry
-# oc new-app --docker-image="192.168.141.132:5000/openshift3/jenkins-2-rhel7:latest"
+$ oc new project jenkins
+$ docker pull 192.168.141.132:5000/openshift3/jenkins-2-rhel7:latest  # pull into local registry
+$ oc new-app --docker-image="192.168.141.132:5000/openshift3/jenkins-2-rhel7:latest"
 ```
 
 * NB for Jenkins to work the default serviceaccount needs admin access to the project
 
 ```
-oc policy add-role-to-user admin system:serviceaccount:<project name>:default
+$ oc policy add-role-to-user admin system:serviceaccount:<project name>:default
 ```
 
 After this add a PVC as the default is not persistent - this can be done via the console: delete the old pvc and add a new one
 Ensure that the image pull policy in the deployment config is set to IfNotPresent (edit the dc)
 
 ```
-# oc set volume dc/jenkins-2-rhel7 --remove --name=jenkins-2-rhel7-volume-1 # name of volume created
-# oc edit dc jenkins-2-rhel7   # and set ImagePullPolicy to IfNotPresent
+$ oc set volume dc/jenkins-2-rhel7 --remove --name=jenkins-2-rhel7-volume-1 # name of volume created
+$ oc edit dc jenkins-2-rhel7   # and set ImagePullPolicy to IfNotPresent
 ```
 
 ## Stopping the OCP Cluster
 
 ```
-# sudo oc adm drain -l "a!=" --delete-local-data --ignore-daemonsets
-# sudo mv /etc/origin/node/pods /etc/origin/node/pods.stop
-# sudo systemctl stop atomic-openshift-node
-# sudo docker ps -q | xargs docker stop --time 30 # this takes a while to shutdown the sdn by the looks of it
-# sudo systemctl stop docker
+$ sudo oc adm drain -l "a!=" --delete-local-data --ignore-daemonsets
+$ sudo mv /etc/origin/node/pods /etc/origin/node/pods.stop
+$ sudo systemctl stop atomic-openshift-node
+$ sudo docker ps -q | xargs docker stop --time 30 # this takes a while to shutdown the sdn by the looks of it
+$ sudo systemctl stop docker
 ```
 
 ## Restarting the OCP Cluster
 
 ```
 <add default route>
-# sudo systemctl start atomic-openshift-node # failed to start automatically on boot for some reason (maybe the route)
-# sudo systemctl start docker # already started but for completeness
-# sudo mv /etc/origin/node/pods.stop /etc/origin/node/pods
+$ sudo systemctl start atomic-openshift-node # failed to start automatically on boot for some reason (maybe the route)
+$ sudo systemctl start docker # already started but for completeness
+$ sudo mv /etc/origin/node/pods.stop /etc/origin/node/pods
 … <have to wait until cluster is up now before can uncordon it> … # might have to use oc status or oc whoami in a loop to wait until ready
-# sudo oc adm uncordon -l "a!="
+$ sudo oc adm uncordon -l "a!="
 ```
 
