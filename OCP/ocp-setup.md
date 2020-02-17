@@ -163,6 +163,32 @@ $ systemctl restart docker
 $ systemctl enable docker
 ```
 
+### opening firewalls
+[a create a new firewalld zone for the subnet and grant it access to the API and DNS ports]
+
+```
+$ firewall-cmd --permanent --new-zone dockerc
+$ firewall-cmd --permanent --zone dockerc --add-source 172.17.0.0/16
+$ firewall-cmd --permanent --zone dockerc --add-port 8443/tcp
+$ firewall-cmd --permanent --zone dockerc --add-port 53/udp
+$ firewall-cmd --permanent --zone dockerc --add-port 8053/udp
+$ firewall-cmd --reload
+```
+[b open Windows Defender firewall for the VM adapter]
+
+Windows Firewall | Advanced Settings | Windows Defender Firewall Properties | Protected Network Connections | Uncheck the correct VMWare Network Adapter
+
+[c open VM firewall to outside]
+
+```
+$ firewall-cmd --permanent --add-port=8443/tcp
+$ firewall-cmd --permanent --add-port=80/tcp
+$ firewall-cmd --permanent --add-port=443/tcp
+$ firewall-cmd --permanent --add-port=3000/tcp # used by gitea
+$ firewall-cmd --permanent --add-port=9000/tcp # used by sonarqube
+$ firewall-cmd --reload
+```
+
 ### Create nfs storage for OCP
 
 * Create nfs storage in the VM (these steps were taken from https://www.thegeekdiary.com/centos-rhel-7-configuring-an-nfs-server-and-nfs-client/):
