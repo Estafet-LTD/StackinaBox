@@ -281,8 +281,6 @@ $ ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/deploy_cluster
 $ oc whoami
 system:admin
 $ oc get pods --all-namespaces
-
-ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/deploy_cluster.yml
 ```
 
 * Add cluster admin rights to the developer user
