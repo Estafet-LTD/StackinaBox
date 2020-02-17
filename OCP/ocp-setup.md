@@ -164,21 +164,12 @@ $ systemctl enable docker
 ```
 
 ### opening firewalls
-[a create a new firewalld zone for the subnet and grant it access to the API and DNS ports]
 
-```
-$ firewall-cmd --permanent --new-zone dockerc
-$ firewall-cmd --permanent --zone dockerc --add-source 172.17.0.0/16
-$ firewall-cmd --permanent --zone dockerc --add-port 8443/tcp
-$ firewall-cmd --permanent --zone dockerc --add-port 53/udp
-$ firewall-cmd --permanent --zone dockerc --add-port 8053/udp
-$ firewall-cmd --reload
-```
-[b open Windows Defender firewall for the VM adapter]
+[a open Windows Defender firewall for the VM adapter]
 
 Windows Firewall | Advanced Settings | Windows Defender Firewall Properties | Protected Network Connections | Uncheck the correct VMWare Network Adapter
 
-[c open VM firewall to outside]
+[b open VM firewall to outside]
 
 ```
 $ firewall-cmd --permanent --add-port=8443/tcp
@@ -289,14 +280,8 @@ $ oc get pods --all-namespaces
 $ oc adm policy add-cluster-role-to-user admin developer
 ```
 
-* (optional) Remove default image streams and templates - need to find how to not load them in the first place
 
-```
-$ oc delete is --all -n openshift
-$ oc delete templates --all -n openshift
-```
-
-* (optional) Add required image streams - see example file in this folder. Also add any required templates
+* (optional) Add required image streams - see example file in this folder. Also add any required templates **TBD**
 
 ```
 $ oc create -f /usr/share/openshift/examples/image-streams/image-streams-rhel7-thales.json 
