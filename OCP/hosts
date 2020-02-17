@@ -267,6 +267,13 @@ openshift_hosted_registry_selector="node-role.kubernetes.io/infra=true"
 ### OpenShift Service Catalog Vars
 ###########################################################################
 
+openshift_install_examples=false
+
+#openshift_examples_load_rhel=false
+#openshift_examples_load_db_templates=false
+#openshift_examples_load_quickstarts=false
+
+
 # default=true
 openshift_enable_service_catalog=false
 openshift_service_catalog_image_prefix=repo.thales.com:5000/
