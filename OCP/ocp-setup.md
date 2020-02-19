@@ -512,30 +512,20 @@ iptables -I INPUT -p tcp -m tcp --dport 80 -j ACCEPT
 curl http://ocp.thales.com:3000
 ```
 
-## Deployment into OCP
+### Install Jenkins CI-CD container
 
-Creating a deployable application is possible by directly referencing the images in the docker registry VM 
-
-* Create a new project jenkins then pull the image and create a new app
+* Ensure files are in /home/engineer/ocp/pods:
 
 ```
-$ oc new project jenkins
-$ docker pull 192.168.141.132:5000/openshift3/jenkins-2-rhel7:latest  # pull into local registry
-$ oc new-app --docker-image="192.168.141.132:5000/openshift3/jenkins-2-rhel7:latest"
+jenkins-pv.yaml
+jenkins-pvc-yaml
+create-jenkins-pod.sh
 ```
 
-* NB for Jenkins to work the default serviceaccount needs admin access to the project
+* run the script to create folders, pv and pvc, project and pull the image
 
 ```
-$ oc policy add-role-to-user admin system:serviceaccount:<project name>:default
-```
-
-After this add a PVC as the default is not persistent - this can be done via the console: delete the old pvc and add a new one
-Ensure that the image pull policy in the deployment config is set to IfNotPresent (edit the dc)
-
-```
-$ oc set volume dc/jenkins-2-rhel7 --remove --name=jenkins-2-rhel7-volume-1 # name of volume created
-$ oc edit dc jenkins-2-rhel7   # and set ImagePullPolicy to IfNotPresent
+/home/engineer/ocp/pods/create-jenkins-pod.sh
 ```
 
 ## Stopping the OCP Cluster
