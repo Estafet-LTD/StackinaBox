@@ -5,6 +5,10 @@ mkdir /srv/nfs/kafka
 chown nfsnobody:nfsnobody /srv/nfs/kafka -R
 chmod 777 /srv/nfs/kafka -R
 echo "\"/srv/nfs/kafka\" *(rw,root_squash)" >> /etc/exports.d/openshift-ansible.exports
+mkdir /srv/nfs/zookeeper
+chown nfsnobody:nfsnobody /srv/nfs/zookeeper -R
+chmod 777 /srv/nfs/zookeeper -R
+echo "\"/srv/nfs/zookeeper\" *(rw,root_squash)" >> /etc/exports.d/openshift-ansible.exports
 
 systemctl restart nfs-server
 
@@ -15,8 +19,9 @@ sleep 10s
 # login as admin
 oc login -u system:admin
 
-# create a persistent volume
+# create a persistent volume for kafka and zookeeper pvc
 oc create -f /home/engineer/ocp/pods/kafka-pv.yaml
+oc create -f /home/engineer/ocp/pods/zoo-pv.yaml
 
 # get and unzip the strimzi bundle
 wget repo.thales.com/strimzi/strimzi.tar.gz
@@ -33,13 +38,13 @@ source /home/engineer/ocp/pods/load-strimzi-images.sh
 VERSION="0.16.2"
 cd /home/engineer/ocp/strimzi-$VERSION
 
-# copy version of strmizi cluster deployment that points to correct images in local registry - file 050-deployment-strimzi-thales-ocp.yaml 
+# copy version of strmizi cluster deployment that points to correct images in local registry - file 050-deployment-strimzi-thales-ocp.yaml
 yes | cp -rf /home/engineer/ocp/pods/050-deployment-strimzi-thales-ocp.yaml /home/engineer/ocp/strimzi-$VERSION/install/cluster-operator/050-Deployment-strimzi-cluster-operator.yaml
-
 
 oc apply -f install/cluster-operator -n kafka
 
 oc adm policy add-cluster-role-to-user strimzi-cluster-operator-namespaced --serviceaccount strimzi-cluster-operator -n kafka
 
-oc apply -f examples/kafka/kafka-persistent-single.yaml
+oc apply -f /home/engineer/ocp/pods/kafka-persistent-thales-ocp.yaml
 oc apply -f examples/topic/kafka-topic.yaml
+
