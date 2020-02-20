@@ -263,7 +263,7 @@ $ mv gitea /var/www/html/gitea
 * Pull strimzi release
 
 ```
-$ wget -O strimzi https://github.com/strimzi/strimzi-kafka-operator/reeases/download/0.16.2/strimzi-0.16.2.tar.gz
+$ wget -O strimzi.tar.gz https://github.com/strimzi/strimzi-kafka-operator/reeases/download/0.16.2/strimzi-0.16.2.tar.gz
 $ mkdir /var/www/html/strimzi
-$ mv strimzi /var/www/html/strimzi
+$ mv strimzi.tar.gz /var/www/html/strimzi
 ```
