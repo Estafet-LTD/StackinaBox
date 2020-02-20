@@ -31,12 +31,10 @@ source /home/engineer/ocp/pods/load-strimzi-images.sh
 
 # depends on version of strimzi unzipped...
 VERSION="0.16.2"
-cd /home/engineer/ocp/strimzi-$(VERSION)/
+cd /home/engineer/ocp/strimzi-$VERSION
 
 # copy version of strmizi cluster deployment that points to correct images in local registry - file 050-deployment-strimzi-thales-ocp.yaml 
-wget repo.thales.com/strimzi/050-deployment-strimzi-thales-ocp.yaml
-mv 050-deployment-strimzi-thales-ocp.yaml /home/engineer/ocp/pods/050-deployment-strimzi-thales-ocp.yaml
-yes | cp -rf /home/engineer/ocp/pods/050-deployment-strimzi-thales-ocp.yaml /home/engineer/ocp/strimzi-$(VERSION)/install/cluster-operator/050-Deployment-strimzi-cluster-operator.yaml
+yes | cp -rf /home/engineer/ocp/pods/050-deployment-strimzi-thales-ocp.yaml /home/engineer/ocp/strimzi-$VERSION/install/cluster-operator/050-Deployment-strimzi-cluster-operator.yaml
 
 
 oc apply -f install/cluster-operator -n kafka
