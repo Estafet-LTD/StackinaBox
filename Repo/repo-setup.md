@@ -267,3 +267,10 @@ $ wget -O strimzi.tar.gz https://github.com/strimzi/strimzi-kafka-operator/reeas
 $ mkdir /var/www/html/strimzi
 $ mv strimzi.tar.gz /var/www/html/strimzi
 ```
+
+* retrieve strimzi images
+
+```
+./repo-load-strimzi-images
+```
+
