@@ -295,6 +295,21 @@ $ oc create -f /usr/share/openshift/examples/quickstart-templates/jenkins-persis
 $ ansible-playbook  /usr/share/ansible/openshift-ansible/playbooks/adhoc/uninstall.yml
 ```
 
+### Install nexus
+
+* Ensure relevant files are in /home/engineer/ocp:
+
+```
+nexus.service
+setup-nexus.sh
+```
+
+* run the script to pull the archive, unzip it, and create the service
+
+```
+/home/engineer/ocp/setup-nexus.sh
+```
+
 ### Install gitea
 
 The following steps are based on instructions at https://computingforgeeks.com/how-to-install-gitea-self-hosted-git-service-on-centos-7-with-nginx-reverse-proxy/
