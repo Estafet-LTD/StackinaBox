@@ -274,3 +274,12 @@ $ mv strimzi.tar.gz /var/www/html/strimzi
 ./repo-load-strimzi-images
 ```
 
+### Download nexus binaries
+
+* Pull nexus 3 into repo VM
+
+```
+$ wget -O nexus.tar.gz http://download.sonatype.com/nexus/3/nexus-3.21.1-01-unix.tar.gz
+$ mkdir /var/www/html/nexus
+$ mv nexus.tar.gz /var/www/html/nexus
+```
