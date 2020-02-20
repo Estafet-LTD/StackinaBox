@@ -257,3 +257,13 @@ $ wget -O gitea https://dl.gitea.io/gitea/1.11.0/gitea-1.11.0-linux-amd64
 $ mkdir /var/www/html/gitea
 $ mv gitea /var/www/html/gitea
 ```
+
+### Download strimzi installer
+
+* Pull strimzi release
+
+```
+$ wget -O strimzi https://github.com/strimzi/strimzi-kafka-operator/reeases/download/0.16.2/strimzi-0.16.2.tar.gz
+$ mkdir /var/www/html/strimzi
+$ mv strimzi /var/www/html/strimzi
+```
