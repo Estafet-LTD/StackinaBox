@@ -518,14 +518,33 @@ curl http://ocp.thales.com:3000
 
 ```
 jenkins-pv.yaml
-jenkins-pvc-yaml
-create-jenkins-pod.sh
+jenkins-pvc.yaml
+jenkins-deployment.sh
 ```
 
 * run the script to create folders, pv and pvc, project and pull the image
 
 ```
-/home/engineer/ocp/pods/create-jenkins-pod.sh
+/home/engineer/ocp/pods/jenkins-deployment.sh
+```
+
+### Install Kafka cluster
+
+* Ensure files are in /home/engineer/ocp/pods:
+
+```
+kafka-pv.yaml
+zookeeper-pv.yaml
+kafka-deployment.sh
+kafka-persistent-ocp-thales.yaml
+load-strimzi-images.sh
+050-deployment-strimzi-thales-ocp.yaml
+```
+
+* run the script to create folders, pv and pvc, project and pull the image
+
+```
+/home/engineer/ocp/pods/kafka-deployment.sh
 ```
 
 ## Stopping the OCP Cluster
