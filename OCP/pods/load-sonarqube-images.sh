@@ -1,6 +1,6 @@
 # log into the internal registry and push
 
-oc login -u deveoper -p developer
+oc login -u developer -p developer
 
 TOKEN=$(oc whoami -t)
 
