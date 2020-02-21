@@ -580,6 +580,24 @@ $ bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic my-top
 
 Once these are open anything typed into the first, producer terminal will appear in the second, consumer terminal
 
+### Install Sonarqube pods
+
+* Ensure files are in /home/engineer/ocp/pods:
+
+```
+load-sonarqube-images.sh
+sonarqube-postgresql-template.yaml
+sonarqube-deployment.sh
+sonarqube-pv.yaml
+sonarqube-pvc.yaml
+```
+
+* run the script to create folders, pv and pvc, project and pull the image
+
+```
+/home/engineer/ocp/pods/sonarqube-deployment.sh
+```
+
 ## Stopping the OCP Cluster
 
 ```
