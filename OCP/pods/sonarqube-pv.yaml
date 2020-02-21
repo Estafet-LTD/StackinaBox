@@ -10,6 +10,7 @@ spec:
   nfs:
     path: /srv/nfs/sonarqube
     server: ocp.thales.com
+---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -22,6 +23,7 @@ spec:
   nfs:
     path: /srv/nfs/sonarqube
     server: ocp.thales.com
+---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -34,6 +36,7 @@ spec:
   nfs:
     path: /srv/nfs/sonarqube
     server: ocp.thales.com
+---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -46,6 +49,7 @@ spec:
   nfs:
     path: /srv/nfs/sonarqube
     server: ocp.thales.com
+---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
