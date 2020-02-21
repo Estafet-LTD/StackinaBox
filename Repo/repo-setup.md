@@ -274,6 +274,14 @@ $ mv strimzi.tar.gz /var/www/html/strimzi
 ./repo-load-strimzi-images
 ```
 
+### Download sonarqube images
+
+* retrieve sonarqube images
+
+```
+./repo-load-sonarqube-images
+```
+
 ### Download nexus binaries
 
 * Pull nexus 3 into repo VM
