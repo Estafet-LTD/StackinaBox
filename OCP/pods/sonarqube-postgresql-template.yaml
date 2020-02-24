@@ -71,7 +71,7 @@ objects:
             value: ${POSTGRESQL_PASSWORD}
           - name: SONARQUBE_JDBC_URL
             value: jdbc:postgresql://${SONARQUBE_SERVICE_NAME}-postgresql:5432/sonarqube
-          image: 'docker-registry.default.svc.cluster.local:5000/openshift/sonarqube:7.9-community'
+          image: 'docker-registry.default.svc.cluster.local:5000/openshift/sonarqube:7.4-community'
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 9000
