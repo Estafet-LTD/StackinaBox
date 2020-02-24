@@ -36,29 +36,3 @@ spec:
   nfs:
     path: /srv/nfs/sonarqube
     server: ocp.thales.com
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: sonar-volume-4
-spec:
-  accessModes:
-  - ReadWriteOnce
-  capacity:
-    storage: 1Gi
-  nfs:
-    path: /srv/nfs/sonarqube
-    server: ocp.thales.com
---
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: sonar-volume-5
-spec:
-  accessModes:
-  - ReadWriteOnce
-  capacity:
-    storage: 1Gi
-  nfs:
-    path: /srv/nfs/sonarqube
-    server: ocp.thales.com
