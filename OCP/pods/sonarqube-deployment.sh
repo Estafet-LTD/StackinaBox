@@ -14,7 +14,7 @@ sleep 10s
 
 oc login -u system:admin
 
-# create 5 persistent volumes for the sonarqube pods
+# create 3 persistent volumes for the sonarqube pods
 oc create -f /home/engineer/ocp/pods/sonarqube-pv.yaml
 
 # pull sonarqube and postgres images from repo
