@@ -247,16 +247,6 @@ objects:
           persistentVolumeClaim:
             claimName: ${SONARQUBE_SERVICE_NAME}-postgresql
     triggers:
-    - imageChangeParams:
-        automatic: true
-        containerNames:
-        - postgresql
-        from:
-          kind: ImageStreamTag
-          name: postgres:${POSTGRESQL_VERSION}
-          namespace: ${NAMESPACE}
-        lastTriggeredImage: ""
-      type: ImageChange
     - type: ConfigChange
 parameters:
 - description: The name of the OpenShift Service exposed for the SonarQube container.
@@ -267,12 +257,12 @@ parameters:
   displayName: Data Volume Capacity
   name: DATA_VOLUME_CAPACITY
   required: true
-  value: 256Mi
+  value: 1Gi
 - description: Volume space available for extensions, e.g. 512Mi, 2Gi.
   displayName: Extensions Volume Capacity
   name: EXTENSIONS_VOLUME_CAPACITY
   required: true
-  value: 256Mi
+  value: 1Gi
 - description: SonarQube container memory limits.
   displayName: Memory Limits
   name: SONARQUBE_MEMORY_LIMITS
