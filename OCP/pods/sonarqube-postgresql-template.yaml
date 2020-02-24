@@ -209,7 +209,9 @@ objects:
               secretKeyRef:
                 key: database-name
                 name: ${SONARQUBE_SERVICE_NAME}-postgresql
-          image: 'docker-registry.default.svc.cluster.local:5000/openshift/postgres:9.5'
+          - name: POSTGRES_HOST_AUTH_METHOD
+            value: trust
+          image: 'docker-registry.default.svc.cluster.local:5000/openshift/postgresql-95-rhel7'
           imagePullPolicy: IfNotPresent
           livenessProbe:
             initialDelaySeconds: 30
@@ -270,14 +272,12 @@ parameters:
   value: 2Gi
 - description: Username for PostgreSQL backend
   displayName: PostgreSQL Username
-  from: sonar[a-zA-Z0-9]{4}
-  generate: expression
+  value: postgres-user
   name: POSTGRESQL_USER
   required: true
 - description: Password for PostgreSQL backend
   displayName: PostgreSQL Password
-  from: '[a-zA-Z0-9]{16}'
-  generate: expression
+  value: postgres-pass
   name: POSTGRESQL_PASSWORD
   required: true
 - description: Volume space available for PostgreSQL, e.g. 512Mi, 2Gi.
