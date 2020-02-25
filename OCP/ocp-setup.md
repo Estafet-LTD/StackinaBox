@@ -561,7 +561,7 @@ jenkins-deployment.sh
 
 ```
 kafka-pv.yaml
-zookeeper-pv.yaml
+zoo-pv.yaml
 kafka-deployment.sh
 kafka-persistent-ocp-thales.yaml
 load-strimzi-images.sh
@@ -601,7 +601,6 @@ load-sonarqube-images.sh
 sonarqube-postgresql-template.yaml
 sonarqube-deployment.sh
 sonarqube-pv.yaml
-sonarqube-pvc.yaml
 ```
 
 * run the script to create folders, pv and pvc, project and pull the image
