@@ -75,6 +75,27 @@ $ cat /etc/resolv.conf
 nameserver 10.0.2.1
 ```
 
+* Ensure that libvirtd is not running a separate dnsmasq service nd kill it if so [optional]
+
+```
+$ systemctl status libvirtd.service # check if this is active and has a running dnsmasq
+$ systemctl disable libvirtd.service
+$ systemctl stop libvirtd.service
+$ netstat -lnp | grep ":53 " # find the 'other dnsmasq service
+$ kill -9 <PID>
+$ reboot
+```
+
+* Start the 'proper' dnsmasq service [optional]
+
+```
+$ systemctl enable dnsmasq
+$ systemctl start dnsmasq
+$ systemctl status dnsmasq 
+# now prove that the 'correct' dnsmasq is working
+$ dig repo.thales.com # should resolve
+$ dig anything.ocp.thales.com # should resolve to ocp.thales.com on 10.0.2.1
+```
 
 ## Set up
 
