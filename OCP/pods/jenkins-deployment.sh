@@ -34,7 +34,7 @@ TOKEN=$(oc whoami -t)
 
 docker login -u developer -p $TOKEN docker-registry.default.svc.cluster.local:5000
 
-docker push docker-registry.default.svc.cluster.local/openshift/jenkins-2-rhel7
+docker push docker-registry.default.svc.cluster.local:5000/openshift/jenkins-2-rhel7
 
 # create ci project
 
