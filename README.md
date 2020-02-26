@@ -35,7 +35,7 @@ RHEL 7 VM (VMWare)
 
 ### OCP VM
 RHEL 7 VM (VMWare) 
-* OpenShift all-in-one cluster with Jenkins, SonarQube 
+* OpenShift all-in-one cluster with Jenkins, Kafka, SonarQube 
 * Gitea 
 * Nexus
 
