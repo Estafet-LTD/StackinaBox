@@ -198,6 +198,9 @@ $ firewall-cmd --permanent --add-port=80/tcp
 $ firewall-cmd --permanent --add-port=443/tcp
 $ firewall-cmd --permanent --add-port=3000/tcp # used by gitea
 $ firewall-cmd --permanent --add-port=9000/tcp # used by sonarqube
+$ firewall-cmd --permanent --add-port=53/tcp # dns
+$ firewall-cmd --permanent --add-port=53/udp # dns
+$ firewall-cmd --permanent --add-port=8081/tcp # used by nexus
 $ firewall-cmd --reload
 ```
 
