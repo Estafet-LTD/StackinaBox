@@ -429,6 +429,19 @@ sonarqube-pv.yaml
 /home/engineer/ocp/pods/sonarqube-deployment.sh
 ```
 
+### Reopen firewalls
+
+Installation of OCP closes some of the ports that were opened previously and switches from firewalld to iptables
+
+* Open ports so that IDE can connect:
+
+```
+iptables -I INPUT -p tcp --dport 3000 -j ACCEPT # gitea
+iptables -I INPUT -p tcp --dport 8081 -j ACCEPT # nexus
+iptables -I INPUT -p tcp --dport 53 -j ACCEPT # dns
+iptables -I INPUT -p udp --dport 53 -j ACCEPT # dns
+```
+
 ## Stopping the OCP Cluster
 
 ```
