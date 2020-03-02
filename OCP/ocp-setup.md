@@ -434,7 +434,7 @@ sonarqube-pv.yaml
 ```
 mkdir /srv/nfs/sonarqube/plugins # mkdir if this is first time
 wget http://repo.thales.com/sonar-plugins/sonar-java-plugin-5.8.0.15699.jar # example for java
-mv sonar-java-plugin-6.1.0.20866.jar /srv/nfs/sonarqube/plugins
+mv sonar-java-plugin-5.8.0.15699.jar /srv/nfs/sonarqube/plugins
 oc rollout latest dc/sonar -n=sonarqube # redeploy the sonar pod for the plugin to be loaded
 ```
 
