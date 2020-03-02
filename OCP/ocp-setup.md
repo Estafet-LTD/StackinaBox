@@ -398,8 +398,9 @@ Create a token for the user and copy to the clipboard
 Via Console:
 
 In Manage Jenkins | Global Tools Configuration | add Maven - name it 'M3' - maven home is /var/lib/jenkins/tools/M3/apache-maven-3.6.3/
-In Manage Jenkins | Configure System - under SonarQube section tick the box Enable injection of SonarQube server configuration as build environment variables
-and fill in server details - note the url for the server should be the internal one (ending in .svc). 
+
+In Manage Jenkins | Configure System - under SonarQube section tick the box Enable injection of SonarQube server configuration as build environment variables and fill in server details - note the url for the server should be the internal one (ending in .svc). 
+
 Also add the credential which will be the token created by SonarQube. 
 
 ### Install Kafka cluster
