@@ -359,7 +359,7 @@ Password: Passw0rd!
 curl http://ocp.thales.com:3000
 ```
 
-### Install Jenkins CI-CD container
+### Install Jenkins CI-CD container and extra plugins
 
 * Ensure files are in /home/engineer/ocp/pods:
 
@@ -374,6 +374,33 @@ jenkins-deployment.sh
 ```
 /home/engineer/ocp/pods/jenkins-deployment.sh
 ```
+
+* install sonar scanner plugin and maven
+
+```
+mkdir /srv/nfs/var/lib/jenkins/tools/M3
+wget http://repo.thales.com/jenkins-plugins/maven-plugin.hpi # may not be necessary
+wget http://repo.thales.com/jenkins-plugins/sonar.hpi
+wget http://repo.thales.com/jenkins-plugins/apache-maven-3.6.3-bin.tar.gz
+mv maven-plugin.hpi /srv/nfs/jenkins/plugins
+mv sonar.hpi /srv/nfs/jenkins/plugins 
+tar xzf apache-maven-3.6.3-bin.tar.gz --directory=/srv/nfs/jenkins/tools/M3
+oc rollout latest dc/jenkins-2-rhel7 -n=ci-cd # resar jenkins pod
+```
+
+* Update Jenkins configuration
+
+Via Sonarqube console:
+
+Create a user named jenkins and login
+Create a token for the user and copy to the clipboard
+
+Via Console:
+
+In Manage Jenkins | Global Tools Configuration | add Maven - name it 'M3' - maven home is /var/lib/jenkins/tools/M3/apache-maven-3.6.3/
+In Manage Jenkins | Configure System - under SonarQube section tick the box Enable injection of SonarQube server configuration as build environment variables
+and fill in server details - note the url for the server should be the internal one (ending in .svc). 
+Also add the credential which will be the token created by SonarQube. 
 
 ### Install Kafka cluster
 
@@ -412,7 +439,7 @@ $ bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic my-top
 
 Once these are open anything typed into the first, producer terminal will appear in the second, consumer terminal
 
-### Install Sonarqube pods
+### Install Sonarqube pods and extra plugins
 
 * Ensure files are in /home/engineer/ocp/pods:
 
