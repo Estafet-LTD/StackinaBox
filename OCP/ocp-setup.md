@@ -429,6 +429,15 @@ sonarqube-pv.yaml
 /home/engineer/ocp/pods/sonarqube-deployment.sh
 ```
 
+* Install plugins for sonarqube (example java plugin)
+
+```
+mkdir /srv/nfs/sonarqube/plugins # mkdir if this is first time
+wget http://repo.thales.com/sonar-plugins/sonar-java-plugin-5.8.0.15699.jar # example for java
+mv sonar-java-plugin-6.1.0.20866.jar /srv/nfs/sonarqube/plugins
+oc rollout latest dc/sonar -n=sonarqube # redeploy the sonar pod for the plugin to be loaded
+```
+
 ### Reopen firewalls
 
 Installation of OCP closes some of the ports that were opened previously and switches from firewalld to iptables
