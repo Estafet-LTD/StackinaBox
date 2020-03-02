@@ -282,6 +282,15 @@ $ mv strimzi.tar.gz /var/www/html/strimzi
 ./repo-load-sonarqube-images
 ```
 
+### Download sonarqube plugins
+* retrieve any plugins fo rsonarqube - example here is java plugin
+
+```
+mkdir /var/www/html/sonar-plugins
+cd /var/www/html/sonar-plugins
+wget https://binaries.sonarsource.com/Distribution/sonar-java-plugin/sonar-java-plugin-5.8.0.15699.jar
+```
+
 ### Download nexus binaries
 
 * Pull nexus 3 into repo VM
