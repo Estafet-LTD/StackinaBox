@@ -14,7 +14,7 @@ Initial version will be manually provisioned. Later it will be scripted so that 
 
 RHEL will be used for production
 
-![diagram](https://github.com/Estafet-LTD/StackinaBox/blob/master/SIAB-infra-overview.png "VM connections")
+![diagram](graphics/SIAB-infra-overview.png "VM connections")
 
 ## Pilot (see pilot-setup.md)
 
