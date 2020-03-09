@@ -60,11 +60,13 @@ wget http://repo.thales.com/jenkins-plugins/display-url-api.hpi
 wget http://repo.thales.com/jenkins-plugins/handy-uri-templates-2-api.hpi
 ```
 
-### get the maven tooling and put it in jenkins folder
+### get the maven tooling and put it in jenkins folder.
+
+This assumes that the script above was run and the Jenkins persistent volume is at _/srv/nfs/jenkins_
 
 ```
-mkdir /srv/nfs/jenkins-example/tools
-mkdir /srv/nfs/jenkins-example/tools/M3
+mkdir /srv/nfs/jenkins/tools
+mkdir /srv/nfs/jenkins/tools/M3
 wget http://repo.thales.com/jenkins-plugins/apache-maven-3.6.3-bin.tar.gz
 tar xzf apache-maven-3.6.3-bin.tar.gz --directory=/srv/nfs/jenkins/tools/M3
 ```
@@ -72,7 +74,7 @@ tar xzf apache-maven-3.6.3-bin.tar.gz --directory=/srv/nfs/jenkins/tools/M3
 ### move new plugins to jenkins folder
 
 ```
-mv maven-plugin.hpi /srv/nfs/jenkins-example/plugins
+mv maven-plugin.hpi /srv/nfs/jenkins/plugins
 mv sonar.hpi /srv/nfs/jenkins/plugins
 mv jsch.hpi /srv/nfs/jenkins/plugins
 mv gitea.hpi /srv/nfs/jenkins/plugins
