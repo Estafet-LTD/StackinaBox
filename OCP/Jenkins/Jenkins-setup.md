@@ -126,7 +126,7 @@ check manage hooks
 
 add engineer/Passw0rd! as credential
 
-![diagram](../../graphics/gitea server setup.jpg "Gitea server")
+![diagram](https://github.com/Estafet-LTD/StackinaBox/blob/master/graphics/gitea%20server%20setup.jpg "Gitea server")
 
 ### setup Gitea organization
 
@@ -161,7 +161,7 @@ server url: http://sonar-sonarqube.apps.ocp.thales.com
 
 server token: token copied from sonarqube 
 
-![diagram](../../graphics/sonar setup.jpg "Gitea server")
+![diagram](https://github.com/Estafet-LTD/StackinaBox/blob/master/graphics/sonar%20setup.jpg "Gitea server")
 
 ### maven tool
 
