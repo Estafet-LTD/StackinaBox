@@ -34,7 +34,7 @@ N.B. Some of these plugins will replace the defaults provided with the container
 | ----- |------| --------- |
 | maven    | 3.2 | maven-plugin.hpi |
 | sonar scanner      | 2.8      |  sonar.hpi |
-| jsch dependency | 1.54.2 | jch.hpi |
+| jsch dependency | 0.1.54.2 | jch.hpi |
 | gitea plugin | 1.2.0 | gitea.hpi |
 | git plugin | 3.12.1 | git.hpi |
 | git client | 2.7.7 | git-client.hpi |
