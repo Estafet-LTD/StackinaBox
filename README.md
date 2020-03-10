@@ -18,11 +18,21 @@ ide.thales.com 10.0.2.2
 
 This VM contains development tools and Eclipse IDE to allow development of applications which can be deployed to the OpenShift cluster running in the deployment VM
 
-RHEL 7 VM
 * devtoolset
 * git client
 * maven
 * Eclipse 2019-09
+    * CodeReady plug-in for OpenShift development
+    * PyDev plug-in for Python development
+    * CDT plug-in for C++ development
+    * Spring IDE
+    * JBoss Maven Spring Boot Configurator
+
+_RHEL 7 VM_
+- 8Gb RAM
+- 1 CPU
+- 20Gb hard disk
+- Host-only adapter (disconnected)
 
 --------------------------------------------
 
@@ -31,14 +41,6 @@ RHEL 7 VM
 ocp.thales.com 10.0.2.1
 
 This VM hosts an All-in-One (AIO) OpenShift Container Platform cluster. 
-
-RHEL 7 VM
-
-24 Gb RAM
-
-8 cores
-
-100 Gb hard disk
 
 Inside the OCP will be pre-installed containers as follows:
 
@@ -51,6 +53,12 @@ Also inside the Deployment VM there are:
 - Gitea
 - Nexus
 
+_RHEL 7 VM_
+- 24 Gb RAM
+- 8 cores
+- 100 Gb hard disk
+- Host-only adapter (disconnected)
+
 ------------------------------------------
 
 ### Infra VM
@@ -62,9 +70,9 @@ This VM contains Red Hat repositories, image registry, and various other files r
 * Red Hat repos
 * Required images
 
- RHEL 7 VM |
-2Gb RAM |
- 1 CPU |
-200Gb hard disk |
-NAT adapter for internet connection |
-Host only adapter for connection between VMs |
+ _RHEL 7 VM_
+ - 2Gb RAM 
+ - 1 CPU 
+ - 200Gb hard disk 
+ - NAT adapter for internet connection 
+- Host only adapter for connection between VMs 
