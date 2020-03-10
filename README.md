@@ -62,10 +62,10 @@ This VM contains Red Hat repositories, image registry, and various other files r
 * Red Hat repos
 * Required images
 
-|RHEL 7 VM|
+| RHEL 7 VM |
 --------
-|2Gb RAM|
-|1 CPU|
-|200Gb hard disk|
-|NAT adapter for internet connection|
-|Host only adapter for connection between VMs|
+| 2Gb RAM |
+| 1 CPU |
+| 200Gb hard disk |
+| NAT adapter for internet connection |
+| Host only adapter for connection between VMs |
