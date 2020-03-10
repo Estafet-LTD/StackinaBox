@@ -63,6 +63,7 @@ This VM contains Red Hat repositories, image registry, and various other files r
 * Required images
 
 |RHEL 7 VM|
+--------
 |2Gb RAM|
 |1 CPU|
 |200Gb hard disk|
