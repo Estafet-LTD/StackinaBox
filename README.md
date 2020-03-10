@@ -1,45 +1,70 @@
 # StackinaBox project
 
-A project designed to create a development environment consisting of an IDE and an OpenShift cluster for deployment
+## What is Stack-in-a-Box?
 
-Two runtime VMs will be created with one infra VM
+Stack-in-a-Box is a pre-built development environment consisting of three virtual machines that simplify the use of OpenShift Container Platform (OCP) and offer an approach to Continuous Integration and Continuous Deployment (CI/CD).
 
-IDE - containing an Eclipse development environment
+![diagram](graphics/SIAB-infra-overview.png "SIAB")
 
-OCP - containing an OpenShift cluster
+The project consists of an IDE VM and another VM with an OpenShift cluster for deployment. There is also an infrastructure VM containing the Red Hat repositories, image registries, and plug-ins required to fulfil the disconnected development machines.
 
-Infra - for offline installation of OCP cluster containing RH repositories and image registries
-
-Initial version will be manually provisioned. Later it will be scripted so that VMs can be provisioned automatically
-
-RHEL will be used for production
-
-![diagram](graphics/SIAB-infra-overview.png "VM connections")
-
-## Pilot (see pilot-setup.md)
-
-Initial pilot for OCP was manually configured using _oc cluster up_ but this was not easy to build disconnected
-
-## Pilot 2 (see pilot-2-setup.md)
-
-Second pilot was built entirely disconnected using openshift-ansible playbooks
+--------------------------------------
 
 ## Software to be included:
 
 ### IDE VM
-RHEL 7 VM (VMWare)
+
+ide.thales.com 10.0.2.2
+
+This VM contains development tools and Eclipse IDE to allow development of applications which can be deployed to the OpenShift cluster running in the deployment VM
+
+RHEL 7 VM
 * devtoolset
 * git client
 * maven
 * Eclipse 2019-09
 
+--------------------------------------------
+
 ### OCP VM
-RHEL 7 VM (VMWare) 
-* OpenShift all-in-one cluster with Jenkins, Kafka, SonarQube 
-* Gitea 
-* Nexus
+
+ocp.thales.com 10.0.2.1
+
+This VM hosts an All-in-One (AIO) OpenShift Container Platform cluster. 
+
+RHEL 7 VM
+
+24 Gb RAM
+
+8 cores
+
+100 Gb hard disk
+
+Inside the OCP will be pre-installed containers as follows:
+
+- Jenkins for CI/CD pipeline (see below)
+- Sonarqube for code quality analysis
+- Kafka cluster for testing purposes
+
+Also inside the Deployment VM there are:
+
+- Gitea
+- Nexus
+
+------------------------------------------
 
 ### Infra VM
-RHEL 7 VM (VMWare)
+
+repo.thales.com 10.0.2.3
+
+This VM contains Red Hat repositories, image registry, and various other files required to provision the OpenShift deployment VM. The VM runs Apache HTTP server to serve the various files to the deployment VM
+
 * Red Hat repos
 * Required images
+
+|RHEL 7 VM|
+|2Gb RAM|
+|1 CPU|
+|200Gb hard disk|
+|NAT adapter for internet connection|
+|Host only adapter for connection between VMs|
