@@ -26,7 +26,7 @@ oc project openshift
 
 docker pull repo.thales.com:5000/openshift3/jenkins-2-rhel7
 
-docker tag repo.thales.com:5000/openshift3/jenkins-2-rhel7 docker-registry.default.svc.cluster.local:5000/openshift/jenkins-2-rhel7
+docker tag repo.thales.com:5000/openshift3/jenkins-2-rhel7 docker-registry-default.apps.ocp.thales.com/openshift/jenkins-2-rhel7
 
 # log into the internal registry and push
 
@@ -34,13 +34,13 @@ TOKEN=$(oc whoami -t)
 
 docker login -u developer -p $TOKEN docker-registry.default.svc.cluster.local:5000
 
-docker push docker-registry.default.svc.cluster.local:5000/openshift/jenkins-2-rhel7
+docker push docker-registry-default.apps.ocp.thales.com/openshift/jenkins-2-rhel7
 
 # create ci project
 
 oc new-project ci-cd
 
-oc new-app --docker-image=docker-registry.default.svc.cluster.local:5000/openshift/jenkins-2-rhel7:latest
+oc new-app openshift/jenkins-2-rhel7:latest
 
 # create a persistent volume claim
 oc create -f /home/engineer/ocp/pods/jenkins-pvc.yaml

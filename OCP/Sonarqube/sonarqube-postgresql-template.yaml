@@ -71,7 +71,7 @@ objects:
             value: ${POSTGRESQL_PASSWORD}
           - name: SONARQUBE_JDBC_URL
             value: jdbc:postgresql://${SONARQUBE_SERVICE_NAME}-postgresql:5432/sonarqube
-          image: 'docker-registry.default.svc.cluster.local:5000/openshift/sonarqube:7.4-community'
+          image: 'docker-registry-default.apps.ocp.thales.com/openshift/sonarqube:7.4-community'
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 9000
@@ -211,7 +211,7 @@ objects:
                 name: ${SONARQUBE_SERVICE_NAME}-postgresql
           - name: POSTGRES_HOST_AUTH_METHOD
             value: trust
-          image: 'docker-registry.default.svc.cluster.local:5000/openshift/postgresql-95-rhel7'
+          image: 'docker-registry-default.apps.ocp.thales.com/openshift/postgresql-95-rhel7'
           imagePullPolicy: IfNotPresent
           livenessProbe:
             initialDelaySeconds: 30
