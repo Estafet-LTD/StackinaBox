@@ -1,18 +1,17 @@
-# Setting up the Clair server in a container in the OpenShift cluster
+# Setting up Clair in the OpenShift cluster for vulnerability scanning
 
 This assumes that the OCP cluster has been successfully installed
 
-The following will explain the process to install Clair and its database as containers within the cluster and the extra steps required to configure
+The following will explain the process to install Clair and its database as containers within the cluster and the extra steps required to configure it for use in a CI/Cd pipeline
 
-Note some steps require that other components have been installed (e.g. **Postgres image installed as part of Sonarqube**)
+## Setting up the Clair server and database in containers in the OpenShift cluster
 
-## Install the Clair pods
+Note this requires that the postgresql-95-rhel7 image stream has already been installed **(This image is installed as part of Sonarqube)**
 
-This will install the Clair server and a Postgres db in containers in the cluster with a persistent volume
+### Install the Clair pods
 
-* Ensure these files are in /home/engineer/ocp/pods:
+This will install the Clair server and a Postgres DB container in the cluster with a persistent volume
 
-### Install Clair pods
 
 * Ensure files are in /home/engineer/ocp/pods:
 
@@ -23,12 +22,12 @@ clair-deployment.sh
 clair-pv.yaml
 ```
 
-* run the script to create folders, pv and pvc, project and pull the image
+* run the script to pull the image then create folders, pv, project, and template
 
 ```
 /home/engineer/ocp/pods/clair-deployment.sh
 ```
 
-## add extra configuration
+### add extra configuration
 
 TO-DO
