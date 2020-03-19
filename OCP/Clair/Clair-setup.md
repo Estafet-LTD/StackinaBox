@@ -10,7 +10,9 @@ In order to use Clair as a disconnected vulnerability scanner there are several 
 
 *  Set up the containers in the OCP cluster
 
-*  Add a step to the CI/CD Pipeline
+*  Add a further scanner container to liaise with Clair server (e.g. Klar) 
+
+*  Add a step to the CI/CD Pipeline to invoke the scanner container
 
 ## Getting latest updates for Clair vulnerabilities
 
