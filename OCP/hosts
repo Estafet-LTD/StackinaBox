@@ -91,7 +91,7 @@ openshift_examples_modify_imagestreams=true
 
 # NOTE: accept insecure registries and registries with self-signed certs
 # setup for lab environment
-openshift_docker_hosted_registry_insecure=true
+# openshift_docker_hosted_registry_insecure=true
 
 ###########################################################################
 ### OpenShift Master Vars
