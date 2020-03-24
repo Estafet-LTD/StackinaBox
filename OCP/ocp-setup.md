@@ -304,6 +304,14 @@ $ oc get pods --all-namespaces
 $ oc adm policy add-cluster-role-to-user admin developer
 ```
 
+* Next, you must trust the certificates being used for the registry on your host system to allow the host to push and pull images. The certificates referenced were created when you secured your registry.
+
+```
+$ mkdir /etc/docker/certs.d/docker-registry-default.apps.ocp.thales.com
+$ cp /etc/origin/node/client-ca.crt /etc/docker/certs.d/docker-registry-default.apps.ocp.thales.com
+$ systemctl restart docker 
+```
+
 * To uninstall and clean up: (assumes hosts file is in default location)
 
 ```
