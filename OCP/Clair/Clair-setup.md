@@ -1,5 +1,7 @@
 # Setting up Clair in the OpenShift cluster for vulnerability scanning
 
+**NB this is work in progress**
+
 In order to use Clair as a disconnected vulnerability scanner there are several steps to follow:
 
 *  Get a snapshot image of the Clair database into the Infrastructure VM
