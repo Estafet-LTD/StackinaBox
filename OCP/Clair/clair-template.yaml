@@ -1,4 +1,3 @@
----
 kind: Template
 apiVersion: v1
 metadata:
@@ -150,7 +149,7 @@ objects:
         database:
           type: pgsql
           options:
-            source: "host=clair-db.clair.svc.cluster.local port=5432 user=clair password=clair dbname=clair sslmode=disable statement_timeout=60000"
+            source: "host=clair-db.clair.svc.cluster.local port=5432 user=postgres password=password dbname=clair sslmode=disable statement_timeout=60000"
             cachesize: 16384
             paginationkey: "XxoPtCUzrUv4JV5dS+yQ+MdW7yLEJnRMwigVY/bpgtQ="
         api:
@@ -190,6 +189,7 @@ objects:
             keyfile:
             certfile:
             proxy:
+# Parameters which can be changed during the run
 parameters:
 - description: Image URL for the Clair image.
   displayName: Docker image URL
