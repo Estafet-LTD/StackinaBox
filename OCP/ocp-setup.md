@@ -73,6 +73,7 @@ address=/ocp.thales.com/10.0.2.1
 ```
 $ cat /etc/resolv.conf
 nameserver 10.0.2.1
+search cluster.local
 ```
 
 * Ensure that libvirtd is not running a separate dnsmasq service nd kill it if so [optional]
@@ -282,6 +283,7 @@ $ ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/prerequisites.
 
 ```
 $ echo "nameserver 10.0.2.1" > /etc/origin/node/resolv.conf
+$ echo "search cluster.local" > /etc/origin/node/resolv.conf
 ```
 
 * Run the deploy playbook (assumes hosts file is in default location)
